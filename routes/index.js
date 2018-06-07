@@ -11,8 +11,14 @@ router.get('/', async function(req, res, next) {
   const userName = req.cookies.graph_user_name;
 
   if (accessToken && userName) {
+    let validUsers=["manjum@talentica.com","nitins@talentica.com","sanjoys@talentica.com","sowmyanarayanr@talentica.com","ratneshp@talentica.com"];
+    let curUser=validUsers.filter(x=> x==userName);
+    if(curUser && curUser.length){
     parms.user = userName;
-    parms.debug = `User: ${userName}\nAccess Token: ${accessToken}`;
+    }
+    parms.signInUrl = authHelper.getAuthUrl();
+    parms.debug ="Not Authorize to access reports , Please contact ratneshp@talentica.com"
+   // parms.debug = `User: ${userName}\nAccess Token: ${accessToken}`;
   } else {
     parms.signInUrl = authHelper.getAuthUrl();
     parms.debug = parms.signInUrl;
