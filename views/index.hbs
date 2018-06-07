@@ -1,0 +1,11 @@
+{{! Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE.txt in the project root for license information.}}
+<div >
+  {{!--<p class="lead">This sample app shows how to use the Microsoft Graph API to access Outlook data from Node.js</p>--}}
+  {{#if user}}
+    
+    <div id="vizContainer" hidden="true" style="width:1200px; height:800px;"></div> 
+   
+  {{else}}
+    <a class="btn btn-primary btn-large" href="{{signInUrl}}">Click here to login</a>
+  {{/if}}
+</div>

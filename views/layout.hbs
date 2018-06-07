@@ -1,0 +1,147 @@
+{{! Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE.txt in the project root for license information.}}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{{title}}</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" 
+	    src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+    <script type="text/javascript">
+	var viz;
+        function initViz(project) {
+             var containerDiv = document.getElementById("vizContainer");
+                
+            var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1?:embed=y&:display_count=yes";  
+            if(project=='node-data'){
+              alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1?:embed=y&:display_count=yes";  
+            }        
+            options = {
+            hideTabs: true,
+            hideToolbar: true,
+            onFirstInteractive: function () {
+                //workbook = viz.getWorkbook();
+               // getVizData();
+            }
+        };
+            viz = new tableau.Viz(containerDiv, alphaurl, options);  
+            // Create a viz object and embed it in the container div.
+        }
+        </script>
+    
+  </head>
+  <body>
+    <!-- Nav bar -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+      <a class="navbar-brand" href="/">Project Cicero</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item{{#if active.home}} active{{/if}}">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          {{#if user}}
+
+          <li class="nav-item dropdown">
+              <a id="projectNameLable"  class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">projets</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="changeproject('alpha-sense');" >alpha-sense</a>
+                <a class="dropdown-item" onclick="changeproject('5c');">5c</a>
+                <a class="dropdown-item" onclick="changeproject('shopin');">shopin</a>
+                  <a class="dropdown-item" onclick="changeproject('node-data');">node-data</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a id="reportNameLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">reports</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="changereport('productivity');">productivity</a>
+                <a class="dropdown-item" onclick="changereport('qualiity');">qualiity</a>
+                <a class="dropdown-item" onclick="changereport('design');">design</a>
+              </div>
+            </li>
+            {{!--<li class="nav-item{{#if active.inbox}} active{{/if}}">
+              <a class="nav-link" href="/mail">Inbox</a>
+            </li>
+            <li class="nav-item{{#if active.calendar}} active{{/if}}">
+              <a class="nav-link" href="/calendar">Calendar</a>
+            </li>
+            <li class="nav-item{{#if active.contacts}} active{{/if}}">
+              <a class="nav-link" href="/contacts">Contacts</a>
+            </li>--}}
+          {{/if}}
+        </ul>
+        <ul class="navbar-nav justify-content-end">
+          {{#if user}}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user}}</a>
+              <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/authorize/signout">Sign Out</a>
+              </div>
+            </li>
+          {{else}}
+            <li class="nav-item">
+              <a class="nav-link" href="{{signInUrl}}">Sign In</a>
+            </li>
+          {{/if}}
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main body -->
+    <main role="main" class="container">
+      {{{body}}}
+      <iframe id='myiframeforreport' frameborder="0" marginheight="0" marginwidth="0" 
+      title="data visualization" allowtransparency="true" allowfullscreen="true" class="tableauViz" 
+style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-height: 987px; max-height: 1087px; height: 948px; margin: 0px; padding: 0px; border: none;" 
+>
+</iframe>
+
+      <!-- Debug output -->
+      {{#if debug}}
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Debug</h5>
+            <pre class="bg-light border p-3"><code>{{debug}}</code></pre>
+          </div>
+        </div>
+      {{/if}}
+    </main>
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script>
+      var curReport="";
+      var curProject="";
+      function changereport(report){
+        curReport=report;
+        $("#reportNameLable").text(report);
+       //  initViz();
+        
+      }
+      function changeproject(project){
+        
+         $("#projectNameLable").text(project);
+
+        var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0"
+
+         var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
+            if(project=='node-data'){
+              alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
+            } 
+         $("#myiframeforreport").attr('src', alphaurl+paramstring);
+        curProject=project;
+        // initViz(project);
+      }
+      </script>
+  </body>
+</html>
