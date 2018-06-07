@@ -52,18 +52,36 @@
           <li class="nav-item dropdown">
               <a id="projectNameLable"  class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">projets</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changeproject('alpha-sense');" >alpha-sense</a>
+                <a class="dropdown-item" onclick="changeproject('alphasense');" >alpha-sense</a>
                 <a class="dropdown-item" onclick="changeproject('5c');">5c</a>
                 <a class="dropdown-item" onclick="changeproject('shopin');">shopin</a>
-                  <a class="dropdown-item" onclick="changeproject('node-data');">node-data</a>
+                <a class="dropdown-item" onclick="changeproject('node-data');">node-data</a>
+              </div>
+            </li>
+             <li class="nav-item dropdown">
+              <a id="reportproductivityLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productivity reports</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="changereportproductivity('Development hours');">Development hours</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Dashboard 1');">Dashboard 1</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Code Volumn');">Code Volumn</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Utilization');">Utilization</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Productivity');">Productivity</a>
+                <a class="dropdown-item" onclick="changereportproductivity('productive code');">productive code</a>
+                <a class="dropdown-item" onclick="changereportproductivity('unproductive code');">unproductive code</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Quality vs Design');">Quality vs Design</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Quality');">Quality</a>
+                <a class="dropdown-item" onclick="changereportproductivity('Design');">Design</a>
+
               </div>
             </li>
             <li class="nav-item dropdown">
-              <a id="reportNameLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">reports</a>
+              <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Design reports</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changereport('productivity');">productivity</a>
-                <a class="dropdown-item" onclick="changereport('qualiity');">qualiity</a>
-                <a class="dropdown-item" onclick="changereport('design');">design</a>
+                <a class="dropdown-item" onclick="changereportdesign('Dashboard 1');">Dashboard 1</a>
+                <a class="dropdown-item" onclick="changereportdesign('Serial Killers');">Serial Killers</a>
+                <a class="dropdown-item" onclick="changereportdesign('Leaders');">Leaders</a>
+                <a class="dropdown-item" onclick="changereportdesign('Crime Sites');">Crime Sites</a>
+                <a class="dropdown-item" onclick="changereportdesign('Ownership');">Ownership</a>
               </div>
             </li>
             {{!--<li class="nav-item{{#if active.inbox}} active{{/if}}">
@@ -120,26 +138,53 @@ style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-he
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
-      var curReport="";
+      var curDesignReport="";
+      var curproductivityReport="";
       var curProject="";
-      function changereport(report){
-        curReport=report;
-        $("#reportNameLable").text(report);
-       //  initViz();
+      var reportCategory="";
+      function changereportdesign(report){
+        curDesignReport=report;
+        reportCategory="design";
+        $("#reportdesignLable").text(report);
+         displayOrChangeTableau();
         
       }
-      function changeproject(project){
+
+      function changereportproductivity(report){
+        curproductivityReport=report;
+        reportCategory="productivity";
+        $("#reportproductivityLable").text(report);
+         displayOrChangeTableau();
         
-         $("#projectNameLable").text(project);
+      }
 
-        var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0"
+      function displayOrChangeTableau(){
+        if(!curProject || !reportCategory){return;}
 
-         var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
-            if(project=='node-data'){
-              alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
-            } 
-         $("#myiframeforreport").attr('src', alphaurl+paramstring);
+        var hostMyUrl="https://public.tableau.com/views/"+curProject+"-"+reportCategory+"/";
+        if(reportCategory=="design"){
+          if(!curDesignReport){return;}
+          hostMyUrl=hostMyUrl+curDesignReport.replace(/ /g,'');
+        }
+         else{
+            if(!curproductivityReport){return;}
+          hostMyUrl=hostMyUrl+curproductivityReport.replace(/ /g,'');;
+        }
+            var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0"
+
+        // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
+        //    if(project=='node-data'){
+        //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
+        //    } 
+         $("#myiframeforreport").attr('src', hostMyUrl+paramstring);
+      }
+
+      function changeproject(project){
         curProject=project;
+         $("#projectNameLable").text(project);
+          displayOrChangeTableau();
+      
+        
         // initViz(project);
       }
       </script>
