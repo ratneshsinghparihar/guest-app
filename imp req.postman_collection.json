@@ -1,0 +1,517 @@
+{
+	"variables": [],
+	"info": {
+		"name": "imp req",
+		"_postman_id": "cd68aba1-67b7-e723-6d39-ebff761c1fe4",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:9900/data/projects",
+			"request": {
+				"url": "http://localhost:9900/data/projects",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"maitri\",\"\":\"maitri\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/Config",
+			"request": {
+				"url": "http://localhost:9900/data/Config",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"maitri\",\"\":\"maitri\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/repotype",
+			"request": {
+				"url": "http://localhost:9900/data/repotype",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"maitri\",\"\":\"maitri\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/gitloganamoly",
+			"request": {
+				"url": "http://localhost:9900/data/gitloganamoly",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"maitri\",\"\":\"maitri\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/processstatus",
+			"request": {
+				"url": "http://localhost:9900/data/processstatus",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"name\":\"maitri\",\"\":\"maitri\"}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/config",
+			"request": {
+				"url": "http://localhost:9900/data/config",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"Projectname\": \"vulcan1\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\",\n        \"sonarCommand\": \"\\\"../../sonar-scanner/bin/sonar-scanner.bat\\\" -Dsonar.host.url=http://172.19.101.120:9393 -Dsonar.login=2dcd3909dd3091d5b81cf5fbe1eede589bf8f221 -Dsonar.java.binaries=../../sonar-scanner/lib/ -Dsonar.projectName=$reponame -Dsonar.projectKey=$reponame -Dsonar.sources=./ -Dsonar.language=$repotype\",\n        \"sonarCommandWithoutType\": \"\\\"../../sonar-scanner/bin/sonar-scanner\\\" -Dsonar.host.url=http://172.19.101.120:9393 -Dsonar.login=2dcd3909dd3091d5b81cf5fbe1eede589bf8f221 -Dsonar.java.binaries=../../sonar-scanner/lib/ -Dsonar.projectName=$reponame -Dsonar.projectKey=$reponame -Dsonar.sources=./ \",\n        \"exCludeFiles\": \"package-lock.json\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/emailalias",
+			"request": {
+				"url": "http://localhost:9900/data/emailalias",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/config/searchAll?Projectname=vulcan",
+			"request": {
+				"url": {
+					"raw": "http://localhost:9900/data/config/searchAll?Projectname=vulcan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9900",
+					"path": [
+						"data",
+						"config",
+						"searchAll"
+					],
+					"query": [
+						{
+							"key": "Projectname",
+							"value": "vulcan",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/repotype/searchAll?Projectname=vulcan",
+			"request": {
+				"url": {
+					"raw": "http://localhost:9900/data/repotype/searchAll?Projectname=vulcan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9900",
+					"path": [
+						"data",
+						"repotype",
+						"searchAll"
+					],
+					"query": [
+						{
+							"key": "Projectname",
+							"value": "vulcan",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/gitloganamoly/searchAll?Projectname=vulcan",
+			"request": {
+				"url": {
+					"raw": "http://localhost:9900/data/gitloganamoly/searchAll?Projectname=vulcan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9900",
+					"path": [
+						"data",
+						"gitloganamoly",
+						"searchAll"
+					],
+					"query": [
+						{
+							"key": "Projectname",
+							"value": "vulcan",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/emailalias/searchAll?Projectname=vulcan",
+			"request": {
+				"url": {
+					"raw": "http://localhost:9900/data/emailalias/searchAll?Projectname=vulcan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9900",
+					"path": [
+						"data",
+						"emailalias",
+						"searchAll"
+					],
+					"query": [
+						{
+							"key": "Projectname",
+							"value": "vulcan",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/processstatus/searchAll?Projectname=vulcan",
+			"request": {
+				"url": {
+					"raw": "http://localhost:9900/data/processstatus/searchAll?Projectname=vulcan",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "9900",
+					"path": [
+						"data",
+						"processstatus",
+						"searchAll"
+					],
+					"query": [
+						{
+							"key": "Projectname",
+							"value": "vulcan",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " [{\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 5000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }]"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/emailalias",
+			"request": {
+				"url": "http://localhost:9900/data/emailalias",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"projectname\": \"vulcan1\",\n        \"email\": \"calvin.iyer@gmail.com\",\n        \"alias\": \"calvin.iyer@gmail.com\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/repotype",
+			"request": {
+				"url": "http://localhost:9900/data/repotype",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"projectname\": \"vulcan1\",\n        \"reponame\": \"Drones-SW-DartService\",\n        \"repotype\": \"js\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/gitloganamoly",
+			"request": {
+				"url": "http://localhost:9900/data/gitloganamoly",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"projectname\": \"vulcan1\",\n        \"author\": \"calvin.iyer@gmail.com\",\n        \"commit\": \"46a20db84f5bcc2a711b1ae76f16d97281c7fcc2\",\n        \"date\": \"2018-03-23T14:53:43.000Z\",\n        \"deletions\": 1701,\n        \"insertions\": 1701,\n        \"isAnamoly\": true,\n        \"message\": \"DartService-Initial-Commit\",\n        \"paths_insertion\": \"4\",\n        \"paths_deletion\": \"0\",\n        \"paths_path\": \"DartService/.gitignore\",\n        \"paths_isAnamoly\": \"\",\n        \"reponame\": \"Drones-SW-DartService\"\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/processstatus",
+			"request": {
+				"url": "http://localhost:9900/data/processstatus",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"projectname\": \"vulcan\",\n        \"checkEnvironment\": true,\n        \"main\": true,\n        \"mainGitAnalysis\": true,\n        \"prepareConfigurationList\": true,\n        \"mainCiceroAnalysis\": true,\n        \"mainSonarAnalysis\": true,\n        \"sonarAnalysis\": true,\n        \"productivityjob\": true,\n        \"sonarETL\": true,\n        \"analytics\": true,\n        \"prepareMainStatus\": true,\n        \"combineCeicroModelsOfall\": true\n    }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/config/19",
+			"request": {
+				"url": "http://localhost:9900/data/config/19",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"id\": 19,\n        \"Projectname\": \"vulcan12\",\n        \"anamolyLOCCountPerCommit\": 50000000,\n        \"anamolyLOCCount\": 1000,\n        \"ciceroServerPort\": 9393,\n        \"ciceroServerHost\": \"172.19.101.120\",\n        \"cleanuprepos\": \"Drones-SW-DartService,Drones-SW-DartService\",\n        \"repospath\": \"repos\"\n  \n   }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/projects/action/doExecuteSPProjectsForProcess",
+			"request": {
+				"url": "http://localhost:9900/data/projects/action/doExecuteSPProjectsForProcess",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \"spName\":\"executeProjectsForProcess\",\n       \"params\":{\n       \t\"projectNames\":\"opx\",\n       \t\"mainGitAnalysis\":1,\n       \t\"prepareMainStatus\":1,\n       \t\"mainCiceroAnalysis\":1,\n       \t\"mainSonarAnalysis\":1,\n       \t\"productivityjob\":1,\n       \t\"SonarETL\":1,\n       \t\"analytics\":1,\n       \t\"combineCeicroModelsOfall\":1\n       }\n   }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/projects/action/doExecuteSPDashboard",
+			"request": {
+				"url": "http://localhost:9900/data/projects/action/doExecuteSPDashboard",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \n        \"spname\": \"dashBoard_config_status\"\n       \n  \n   }"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:9900/data/projects/action/doCreateNewProject",
+			"request": {
+				"url": "http://localhost:9900/data/projects/action/doCreateNewProject",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n       \n        \"Projectname\": \"demo3\"\n       \n  \n   }"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

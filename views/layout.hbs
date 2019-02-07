@@ -52,10 +52,10 @@
           <li class="nav-item dropdown">
               <a id="projectNameLable"  class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">projects</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changeproject('alphasense');" >alpha-sense</a>
-                <a class="dropdown-item" onclick="changeproject('5c');">5c</a>
-                <a class="dropdown-item" onclick="changeproject('shopin');">shopin</a>
-                <a class="dropdown-item" onclick="changeproject('node-data');">node-data</a>
+                 {{#each projectAccess}}
+                 
+                <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
+                {{/each}}
               </div>
             </li>
              <li class="nav-item dropdown">
@@ -84,6 +84,18 @@
                 <a class="dropdown-item" onclick="changereportdesign('Ownership');">Ownership</a>
               </div>
             </li>
+            
+            <li class="nav-item dropdown">
+              <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">organization lebels</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
+                <a class="dropdown-item" onclick="changerlablereport('design-qulaity');">design-quality</a>
+                <a class="dropdown-item" onclick="changerlablereport('Utilization');">Utilization</a>
+                <a class="dropdown-item" onclick="showGridData();">Label Data</a>
+                
+              </div>
+            </li>
+            
             {{!--<li class="nav-item{{#if active.inbox}} active{{/if}}">
               <a class="nav-link" href="/mail">Inbox</a>
             </li>
@@ -140,28 +152,59 @@ style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-he
     <script>
       var curDesignReport="";
       var curproductivityReport="";
+      var curproductivityReport="";
       var curProject="";
       var reportCategory="";
+      var puuid="";
       function changereportdesign(report){
         curDesignReport=report;
         reportCategory="design";
         $("#reportdesignLable").text(report);
-         displayOrChangeTableau();
+         displayOrChangeTableau(puuid);
         
+      }
+      
+      function changerlablereport(report){
+        $("#taletnicalables").text(report);        
+         displayOrChangeTableauforLable(report);
       }
 
       function changereportproductivity(report){
         curproductivityReport=report;
         reportCategory="productivity";
         $("#reportproductivityLable").text(report);
-         displayOrChangeTableau();
+        displayOrChangeTableau(puuid);
         
       }
+      
+      
+      function showGridData(){
+        var hosturl="https://docs.google.com/spreadsheets/d/e/2PACX-1vTQHqwFUvxtFmkGZXfUDHwCjVMK9vqx3L4EAsiR8kaLlkvBTYSVyJFSoYmvXBncM5rU_QRD1qa4JxBK/pubhtml?widget=true&amp;headers=false";
+        $("#myiframeforreport").attr('src', hosturl);
+        
+      }
+      
+      
+      function displayOrChangeTableauforLable(report){
+        var hostMyUrl="https://public.tableau.com/views/myvmlabels/"+report;
+         var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0";
 
-      function displayOrChangeTableau(){
+        // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
+        //    if(project=='node-data'){
+        //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
+        //    } 
+         $("#myiframeforreport").attr('src', hostMyUrl+paramstring);
+      }
+
+      function displayOrChangeTableau(uuid){
         if(!curProject || !reportCategory){return;}
-
-        var hostMyUrl="https://public.tableau.com/views/"+curProject+"-"+reportCategory+"/";
+        puuid=uuid
+        //var projectUIMap=[{"uniqueid":"C6C8AB94-1057-454E-944A-EBA260CCC9E7","name":"node-data","id":1},{"uniqueid":"6F777AB3-493B-4EFA-8764-4C3F780B04D4","name":"alphasense","id":2},{"uniqueid":"7DE933FA-0641-49EB-BBAB-5C792465AA7E","name":"5c","id":3},{"uniqueid":"72898E6F-EF7B-4514-B5C9-7C9B90C21698","name":"shopin","id":4},{"uniqueid":"1DF11A0A-BDA2-4333-9BB5-5E4CCF518480","name":"adcolony","id":5},{"uniqueid":"9F7DD5FF-86F4-4802-BE98-0B114D160FF1","name":"opx","id":6},{"uniqueid":"9D9DD99E-CE84-44D0-A787-996F4A24C59B","name":"mist","id":7},{"uniqueid":"4A7C193B-F8E6-4DD1-B061-CC4500BBAF00","name":"tv2","id":8},{"uniqueid":"94CBEC18-38FC-4D5B-951F-950D22324F4D","name":"onemarket","id":9},{"uniqueid":"F1B37E63-9AAD-40EF-969C-A0C7D60D91F4","name":"canexperience","id":10},{"uniqueid":"0EEBB8FE-A0FA-4839-AE88-68322ADCB8B3","name":"edubrain","id":11},{"uniqueid":"79B03333-82D3-4B5A-ADCC-89C961ACC35A","name":"realization","id":12},{"uniqueid":"B572DDFE-A93C-4687-94D2-E6FB3D4B5270","name":"ahalife","id":13},{"uniqueid":"E443B416-4AAA-4F08-BDC0-0980919759BB","name":"buyitinstalled","id":14},{"uniqueid":"D286A33A-DFFC-4694-B927-8AB63FB615A0","name":"gladiolis","id":15},{"uniqueid":"7546F7C6-E93D-431A-9329-5EB2B75B97A8","name":"invoke","id":16},{"uniqueid":"5F18F21C-5373-486E-8D50-DFC04B0DD297","name":"twiin","id":17},{"uniqueid":"6083680D-3976-4E83-9E31-C6F005259369","name":"vulcan","id":18},{"uniqueid":"34D86AD6-5062-41D1-95FC-34ED92037ED8","name":"botworx","id":19},{"uniqueid":"916F2214-5E1A-4917-8992-0B800661D453","name":"strcturedweb","id":20},{"uniqueid":"2b4c138f-deb0-4472-9a77-c9a07bb1605a","name":"spigit","id":21},{"uniqueid":"bbcb3f7f-e0c3-414a-a612-c49e001d8023","name":"xand","id":22}];
+        
+        //var projectGuid=projectUIMap.filter(x=>x.name==curProject)[0].uniqueid;
+        //console.log(`guid:${projectGuid}`)
+        console.log(`uuis:${puuid.toUpperCase()}`)
+        var hostMyUrl="https://public.tableau.com/views/"+puuid.toUpperCase()+"-"+reportCategory+"/";
         if(reportCategory=="design"){
           if(!curDesignReport){return;}
           hostMyUrl=hostMyUrl+curDesignReport.replace(/ /g,'');
@@ -179,10 +222,13 @@ style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-he
          $("#myiframeforreport").attr('src', hostMyUrl+paramstring);
       }
 
-      function changeproject(project){
-        curProject=project;
-         $("#projectNameLable").text(project);
-          displayOrChangeTableau();
+      function changeproject(projectname,uuid){
+        
+        curProject=projectname;
+        puuid=uuid
+        console.log(uuid)
+         $("#projectNameLable").text(projectname);
+          displayOrChangeTableau(puuid);
       
         
         // initViz(project);

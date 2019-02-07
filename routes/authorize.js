@@ -14,12 +14,14 @@ router.get('/', async function(req, res, next) {
 
     try {
       token = await authHelper.getTokenFromCode(code, res);
+      console.log('success')
     } catch (error) {
       res.render('error', { title: 'Error', message: 'Error exchanging code for token', error: error });
+      console.log("error")
     }
 
     // Redirect to home
-    res.redirect('/');
+    res.redirect('/index');
   } else {
     // Otherwise complain
     res.render('error', { title: 'Error', message: 'Authorization error', error: { status: 'Missing code parameter' } });
@@ -50,7 +52,7 @@ router.get('/signout', function(req, res, next) {
   authHelper.clearCookies(res);
 
   // Redirect to home
-  res.redirect('/');
+  res.redirect('/index');
 });
 
 module.exports = router;
