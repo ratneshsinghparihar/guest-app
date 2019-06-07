@@ -29,6 +29,7 @@ require('dotenv').config();
 var mail = require('./routes/mail');
 var calendar = require('./routes/calendar');
 var contacts = require('./routes/contacts');
+var productivityscore=require('./routes/productivityscore');
 var passport = require('passport'), LocalStrategy = require('passport-local').Strategy;
 config.passportSet.setPassport(passport);
 // import { Container } from 'nodedata/di';
@@ -59,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/index', index);
 app.use('/authorize', authorize);
 app.use('/mail', mail);
-app.use('/calendar', calendar);
+app.use('/productivityscore', productivityscore);
 app.use('/contacts', contacts);
 //server.js
 var path = require('path');

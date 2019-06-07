@@ -1,238 +1,659 @@
-{{! Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE.txt in the project root for license information.}}
+{{! Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See LICENSE.txt in the project root for
+license information.}}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>{{title}}</title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" 
-	    src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
-    <script type="text/javascript">
-	var viz;
-        function initViz(project) {
-             var containerDiv = document.getElementById("vizContainer");
-                
-            var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1?:embed=y&:display_count=yes";  
-            if(project=='node-data'){
-              alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1?:embed=y&:display_count=yes";  
-            }        
-            options = {
-            hideTabs: true,
-            hideToolbar: true,
-            onFirstInteractive: function () {
-                //workbook = viz.getWorkbook();
-               // getVizData();
-            }
-        };
-            viz = new tableau.Viz(containerDiv, alphaurl, options);  
-            // Create a viz object and embed it in the container div.
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{title}}</title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+  <script type="text/javascript">
+    var viz;
+    function initViz(project) {
+      var containerDiv = document.getElementById("vizContainer");
+
+      var alphaurl = "https://public.tableau.com/views/alphasense-productivity/Dashboard1?:embed=y&:display_count=yes";
+      if (project == 'node-data') {
+        alphaurl = "https://public.tableau.com/views/node-data-productivity/Dashboard1?:embed=y&:display_count=yes";
+      }
+      options = {
+        hideTabs: true,
+        hideToolbar: true,
+        onFirstInteractive: function () {
+          //workbook = viz.getWorkbook();
+          // getVizData();
         }
-        </script>
-    
-  </head>
-  <body>
-    <!-- Nav bar -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <a class="navbar-brand" href="/">Project Cicero</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item{{#if active.home}} active{{/if}}">
-            <a class="nav-link" href="/">Home</a>
-          </li>
-          {{#if user}}
+      };
+      viz = new tableau.Viz(containerDiv, alphaurl, options);
+      // Create a viz object and embed it in the container div.
+    }
+  </script>
 
-          <li class="nav-item dropdown">
-              <a id="projectNameLable"  class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">projects</a>
-              <div class="dropdown-menu">
-                 {{#each projectAccess}}
-                 
-                <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
-                {{/each}}
-              </div>
-            </li>
-             <li class="nav-item dropdown">
-              <a id="reportproductivityLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Productivity reports</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changereportproductivity('Development hours');">Development hours</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Dashboard 1');">Dashboard 1</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Code Volumn');">Code Volumn</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Utilization');">Utilization</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Productivity');">Productivity</a>
-                <a class="dropdown-item" onclick="changereportproductivity('productive code');">productive code</a>
-                <a class="dropdown-item" onclick="changereportproductivity('unproductive code');">unproductive code</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Quality vs Design');">Quality vs Design</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Quality');">Quality</a>
-                <a class="dropdown-item" onclick="changereportproductivity('Design');">Design</a>
+</head>
 
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-              <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Design reports</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changereportdesign('Dashboard 1');">Dashboard 1</a>
-                <a class="dropdown-item" onclick="changereportdesign('Serial Killers');">Serial Killers</a>
-                <a class="dropdown-item" onclick="changereportdesign('Leaders');">Leaders</a>
-                <a class="dropdown-item" onclick="changereportdesign('Crime Sites');">Crime Sites</a>
-                <a class="dropdown-item" onclick="changereportdesign('Ownership');">Ownership</a>
-              </div>
-            </li>
-            
-            <li class="nav-item dropdown">
-              <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">organization lebels</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
-                <a class="dropdown-item" onclick="changerlablereport('design-qulaity');">design-quality</a>
-                <a class="dropdown-item" onclick="changerlablereport('Utilization');">Utilization</a>
-                <a class="dropdown-item" onclick="showGridData();">Label Data</a>
-                
-              </div>
-            </li>
-            
-            {{!--<li class="nav-item{{#if active.inbox}} active{{/if}}">
-              <a class="nav-link" href="/mail">Inbox</a>
-            </li>
-            <li class="nav-item{{#if active.calendar}} active{{/if}}">
-              <a class="nav-link" href="/calendar">Calendar</a>
-            </li>
-            <li class="nav-item{{#if active.contacts}} active{{/if}}">
-              <a class="nav-link" href="/contacts">Contacts</a>
-            </li>--}}
-          {{/if}}
-        </ul>
-        <ul class="navbar-nav justify-content-end">
-          {{#if user}}
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user}}</a>
-              <div class="dropdown-menu">
-                  <a class="dropdown-item" href="/authorize/signout">Sign Out</a>
-              </div>
-            </li>
-          {{else}}
-            <li class="nav-item">
-              <a class="nav-link" href="{{signInUrl}}">Sign In</a>
-            </li>
-          {{/if}}
-        </ul>
-      </div>
-    </nav>
+<body>
+  <!-- Nav bar -->
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="/index">Project Cicero</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item{{#if active.home}} active{{/if}}">
+          <a class="nav-link" href="/index">Home</a>
+        </li>
+        {{#if user}}
 
-    <!-- Main body -->
-    <main role="main" class="container">
-      {{{body}}}
-      <iframe id='myiframeforreport' frameborder="0" marginheight="0" marginwidth="0" 
-      title="data visualization" allowtransparency="true" allowfullscreen="true" class="tableauViz" 
-style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-height: 987px; max-height: 1087px; height: 948px; margin: 0px; padding: 0px; border: none;" 
->
-</iframe>
-
-      <!-- Debug output -->
-      {{#if debug}}
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Debug</h5>
-            <pre class="bg-light border p-3"><code>{{debug}}</code></pre>
+        <li class="nav-item dropdown">
+          <a id="projectNameLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">projects</a>
+          <div class="dropdown-menu">
+            {{#each projectAccess}}
+            <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
+            {{/each}}
           </div>
-        </div>
-      {{/if}}
-    </main>
-    
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
+        </li>
+        <li class="nav-item dropdown">
+          <a id="reportproductivityLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Productivity reports</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" onclick="changereportproductivity('Development hours');">Development hours</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Dashboard 1');">Dashboard 1</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Code Volumn');">Code Volumn</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Utilization');">Utilization</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Productivity');">Productivity</a>
+            <a class="dropdown-item" onclick="changereportproductivity('productive code');">productive code</a>
+            <a class="dropdown-item" onclick="changereportproductivity('unproductive code');">unproductive code</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Quality vs Design');">Quality vs Design</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Quality');">Quality</a>
+            <a class="dropdown-item" onclick="changereportproductivity('Design');">Design</a>
+            <a class="dropdown-item" onclick="redirectProductivity();">new productivity</a>
+            <a class="dropdown-item" onclick="redirectQuality();">new quality</a>
+
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Design reports</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" onclick="changereportdesign('Dashboard 1');">Dashboard 1</a>
+            <a class="dropdown-item" onclick="changereportdesign('Serial Killers');">Serial Killers</a>
+            <a class="dropdown-item" onclick="changereportdesign('Leaders');">Leaders</a>
+            <a class="dropdown-item" onclick="changereportdesign('Crime Sites');">Crime Sites</a>
+            <a class="dropdown-item" onclick="changereportdesign('Ownership');">Ownership</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">organization lebels</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
+            <a class="dropdown-item" onclick="changerlablereport('design-qulaity');">design-quality</a>
+            <a class="dropdown-item" onclick="changerlablereport('Utilization');">Utilization</a>
+            <a class="dropdown-item" onclick="showGridData();">Label Data</a>
+
+          </div>
+        </li>
+        
+        {{!--
+        <li class="nav-item{{#if active.inbox}} active{{/if}}">
+          <a class="nav-link" href="/mail">Inbox</a>
+        </li>
+        <li class="nav-item{{#if active.calendar}} active{{/if}}">
+          <a class="nav-link" href="/calendar">Calendar</a>
+        </li>
+        <li class="nav-item{{#if active.contacts}} active{{/if}}">
+          <a class="nav-link" href="/contacts">Contacts</a>
+        </li>--}} {{/if}}
+      </ul>
+      <ul class="navbar-nav justify-content-end">
+        {{#if user}}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user}}</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/How to Use Value measure tool.docx">VM Doc</a>
+            <a class="dropdown-item" href="/Value Measure using automated tools .docx">VM Tool Doc</a>
+            <a class="dropdown-item" href="/Value Measure.pptx">2018 Overview</a>
+            <a class="dropdown-item" href="/VM 2.0 Process.bmp">Process</a>
+            <a class="dropdown-item" href="/vm_lables.xlsx">VM Lables</a>
+            <a class="dropdown-item" href="/authorize/signout">Sign Out</a>
+          </div>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{signInUrl}}">Sign In</a>
+        </li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main body -->
+  <main role="main" class="container">
+    {{{body}}} {{!--
+    <iframe id='myiframeforreport' frameborder="0" marginheight="0" marginwidth="0" title="data visualization"
+      allowtransparency="true" allowfullscreen="true" class="tableauViz" style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-height: 987px; max-height: 1087px; height: 948px; margin: 0px; padding: 0px; border: none;">
+    </iframe> --}}
    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script>
-      var curDesignReport="";
-      var curproductivityReport="";
-      var curproductivityReport="";
-      var curProject="";
-      var reportCategory="";
-      var puuid="";
-      function changereportdesign(report){
-        curDesignReport=report;
-        reportCategory="design";
-        $("#reportdesignLable").text(report);
-         displayOrChangeTableau(puuid);
-        
-      }
-      
-      function changerlablereport(report){
-        $("#taletnicalables").text(report);        
-         displayOrChangeTableauforLable(report);
-      }
+    <div class="row">
+      <div id="tableauViz"></div>
+      <div id="authorfilter"></div>
+      <div id='if-part' style='visibility: hidden;'>
+          <input id="targetPer" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
+<input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+<label >Minimum</label>
+<label id="lblminimumscore" style="background-color: #71f28a" >0.0</label>
+<label >Target</label>
+<label id="lbltargetscore"  style="background-color: #59c16d" >0.0</label>
+<label >Strech</label>
+<label id="lblstrechscore"  style="background-color: #3a7f47" >0.0</label>
+ </div>
+      <div id="productivity"></div>
+     <div id = "quality"></div>
+     
+    </div>
+    <!-- Debug output -->
 
-      function changereportproductivity(report){
-        curproductivityReport=report;
-        reportCategory="productivity";
-        $("#reportproductivityLable").text(report);
-        displayOrChangeTableau(puuid);
-        
-      }
-      
-      
-      function showGridData(){
-        var hosturl="https://docs.google.com/spreadsheets/d/e/2PACX-1vTQHqwFUvxtFmkGZXfUDHwCjVMK9vqx3L4EAsiR8kaLlkvBTYSVyJFSoYmvXBncM5rU_QRD1qa4JxBK/pubhtml?widget=true&amp;headers=false";
-        $("#myiframeforreport").attr('src', hosturl);
-        
-      }
-      
-      
-      function displayOrChangeTableauforLable(report){
-        var hostMyUrl="https://public.tableau.com/views/myvmlabels/"+report;
-         var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0";
 
-        // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
-        //    if(project=='node-data'){
-        //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
-        //    } 
-         $("#myiframeforreport").attr('src', hostMyUrl+paramstring);
-      }
 
-      function displayOrChangeTableau(uuid){
-        if(!curProject || !reportCategory){return;}
-        puuid=uuid
-        //var projectUIMap=[{"uniqueid":"C6C8AB94-1057-454E-944A-EBA260CCC9E7","name":"node-data","id":1},{"uniqueid":"6F777AB3-493B-4EFA-8764-4C3F780B04D4","name":"alphasense","id":2},{"uniqueid":"7DE933FA-0641-49EB-BBAB-5C792465AA7E","name":"5c","id":3},{"uniqueid":"72898E6F-EF7B-4514-B5C9-7C9B90C21698","name":"shopin","id":4},{"uniqueid":"1DF11A0A-BDA2-4333-9BB5-5E4CCF518480","name":"adcolony","id":5},{"uniqueid":"9F7DD5FF-86F4-4802-BE98-0B114D160FF1","name":"opx","id":6},{"uniqueid":"9D9DD99E-CE84-44D0-A787-996F4A24C59B","name":"mist","id":7},{"uniqueid":"4A7C193B-F8E6-4DD1-B061-CC4500BBAF00","name":"tv2","id":8},{"uniqueid":"94CBEC18-38FC-4D5B-951F-950D22324F4D","name":"onemarket","id":9},{"uniqueid":"F1B37E63-9AAD-40EF-969C-A0C7D60D91F4","name":"canexperience","id":10},{"uniqueid":"0EEBB8FE-A0FA-4839-AE88-68322ADCB8B3","name":"edubrain","id":11},{"uniqueid":"79B03333-82D3-4B5A-ADCC-89C961ACC35A","name":"realization","id":12},{"uniqueid":"B572DDFE-A93C-4687-94D2-E6FB3D4B5270","name":"ahalife","id":13},{"uniqueid":"E443B416-4AAA-4F08-BDC0-0980919759BB","name":"buyitinstalled","id":14},{"uniqueid":"D286A33A-DFFC-4694-B927-8AB63FB615A0","name":"gladiolis","id":15},{"uniqueid":"7546F7C6-E93D-431A-9329-5EB2B75B97A8","name":"invoke","id":16},{"uniqueid":"5F18F21C-5373-486E-8D50-DFC04B0DD297","name":"twiin","id":17},{"uniqueid":"6083680D-3976-4E83-9E31-C6F005259369","name":"vulcan","id":18},{"uniqueid":"34D86AD6-5062-41D1-95FC-34ED92037ED8","name":"botworx","id":19},{"uniqueid":"916F2214-5E1A-4917-8992-0B800661D453","name":"strcturedweb","id":20},{"uniqueid":"2b4c138f-deb0-4472-9a77-c9a07bb1605a","name":"spigit","id":21},{"uniqueid":"bbcb3f7f-e0c3-414a-a612-c49e001d8023","name":"xand","id":22}];
-        
-        //var projectGuid=projectUIMap.filter(x=>x.name==curProject)[0].uniqueid;
-        //console.log(`guid:${projectGuid}`)
-        console.log(`uuis:${puuid.toUpperCase()}`)
-        var hostMyUrl="https://public.tableau.com/views/"+puuid.toUpperCase()+"-"+reportCategory+"/";
-        if(reportCategory=="design"){
-          if(!curDesignReport){return;}
-          hostMyUrl=hostMyUrl+curDesignReport.replace(/ /g,'');
+
+    {{#if debug}}
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Debug</h5>
+        <pre class="bg-light border p-3"><code>{{debug}}</code></pre>
+      </div>
+    </div>
+    {{/if}}
+  </main>
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script>
+    var curDesignReport = "";
+    var curproductivityReport = "";
+    var curproductivityReport = "";
+    var curProject = "";
+    var currProject1 = ""
+    var reportCategory = "";
+    var puuid = "";
+    var activeSheet;
+    var workbook;
+    var viz;
+    var authors;
+    function changereportdesign(report) {
+      curDesignReport = report;
+      reportCategory = "design";
+      $("#reportdesignLable").text(report);
+      displayOrChangeTableau(puuid);
+
+    }
+
+
+    function redirectProductivity() {
+    
+
+     let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
+      //console.log('ghdgsdhfgghdgsdhfg')
+      //window.location = "https://localhost:3333" + href;
+      let url = "https://localhost:3333" + href;
+     
+     // window.history.pushState(null, null, url);
+      //window.location.replace(url);
+     //  window.location = url;
+       //location.assign(url);
+     
+        //$("#reportproductivityLable").text("mist2019march");
+
+
+      
+      //displayOrChangeTableau(puuid);
+
+
+      var data0 = { spName: "getProductivityScore", param: curProject };
+
+      var json = JSON.stringify(data0);
+
+
+      $.ajax({
+        type: "POST",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+        // addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+             addproductivityScore(author);
+            })
+          }
+          
+          
         }
-         else{
-            if(!curproductivityReport){return;}
-          hostMyUrl=hostMyUrl+curproductivityReport.replace(/ /g,'');;
+      });
+    }
+
+    function redirectQuality() {
+     // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
+     // window.location = "https://localhost:3333" + href;
+      var data0 = { spName: "getQualityScore", param: curProject };
+
+      var json = JSON.stringify(data0);
+
+
+      $.ajax({
+        type: "POST",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+        // addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+             qualityScore(author);
+            })
+          }
+          
+          
         }
-            var paramstring="?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0"
+      });
+    }
 
-        // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
-        //    if(project=='node-data'){
-        //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
-        //    } 
-         $("#myiframeforreport").attr('src', hostMyUrl+paramstring);
+    function changerlablereport(report) {
+      $("#taletnicalables").text(report);
+      displayOrChangeTableauforLable(report);
+    }
+
+    function changereportproductivity(report) {
+      curproductivityReport = report;
+      reportCategory = "productivity";
+      $("#reportproductivityLable").text(report);
+      displayOrChangeTableau(puuid);
+       $('#tableauViz').show();
+        $('#productivity').hide();
+      $('#quality').hide()
+       node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
+      $('#authorfilter').show();
+
+    }
+
+
+    function showGridData() {
+      var hosturl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTQHqwFUvxtFmkGZXfUDHwCjVMK9vqx3L4EAsiR8kaLlkvBTYSVyJFSoYmvXBncM5rU_QRD1qa4JxBK/pubhtml?widget=true&amp;headers=false";
+      $("#myiframeforreport").attr('src', hosturl);
+
+    }
+
+
+    function displayOrChangeTableauforLable(report) {
+      var hostMyUrl = "https://public.tableau.com/views/myvmlabels/" + report;
+      var paramstring = "?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0";
+
+      // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
+      //    if(project=='node-data'){
+      //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
+      //    } 
+      //$("#myiframeforreport").attr('src', hostMyUrl + paramstring);
+      var containerDiv = document.getElementById("tableauViz");
+      var options = {
+
+        "Page": "1",
+
+        //width: "1920px",
+
+        //height: "1080px",
+
+        hideTabs: true,
+
+        hideToolbar: true,
+
+        onFirstInteractive: function () {
+
+          workbook = viz.getWorkbook();
+
+          activeSheet = workbook.getActiveSheet();
+          activeSheet.applyFilterAsync("Author Name", "",
+            tableau.FilterUpdateType.ALL);
+
+        }
+
+
+      };
+
+      if (!viz) {
+        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+      }
+      else {
+        viz.getWorkbook().activateSheetAsync(report);
       }
 
-      function changeproject(projectname,uuid){
-        
-        curProject=projectname;
-        puuid=uuid
-        console.log(uuid)
-         $("#projectNameLable").text(projectname);
-          displayOrChangeTableau(puuid);
+
+    }
+
+    function displayOrChangeTableau(uuid) {
+      if (!curProject || !reportCategory) { return; }
+      puuid = uuid
+      //var projectUIMap=[{"uniqueid":"C6C8AB94-1057-454E-944A-EBA260CCC9E7","name":"node-data","id":1},{"uniqueid":"6F777AB3-493B-4EFA-8764-4C3F780B04D4","name":"alphasense","id":2},{"uniqueid":"7DE933FA-0641-49EB-BBAB-5C792465AA7E","name":"5c","id":3},{"uniqueid":"72898E6F-EF7B-4514-B5C9-7C9B90C21698","name":"shopin","id":4},{"uniqueid":"1DF11A0A-BDA2-4333-9BB5-5E4CCF518480","name":"adcolony","id":5},{"uniqueid":"9F7DD5FF-86F4-4802-BE98-0B114D160FF1","name":"opx","id":6},{"uniqueid":"9D9DD99E-CE84-44D0-A787-996F4A24C59B","name":"mist","id":7},{"uniqueid":"4A7C193B-F8E6-4DD1-B061-CC4500BBAF00","name":"tv2","id":8},{"uniqueid":"94CBEC18-38FC-4D5B-951F-950D22324F4D","name":"onemarket","id":9},{"uniqueid":"F1B37E63-9AAD-40EF-969C-A0C7D60D91F4","name":"canexperience","id":10},{"uniqueid":"0EEBB8FE-A0FA-4839-AE88-68322ADCB8B3","name":"edubrain","id":11},{"uniqueid":"79B03333-82D3-4B5A-ADCC-89C961ACC35A","name":"realization","id":12},{"uniqueid":"B572DDFE-A93C-4687-94D2-E6FB3D4B5270","name":"ahalife","id":13},{"uniqueid":"E443B416-4AAA-4F08-BDC0-0980919759BB","name":"buyitinstalled","id":14},{"uniqueid":"D286A33A-DFFC-4694-B927-8AB63FB615A0","name":"gladiolis","id":15},{"uniqueid":"7546F7C6-E93D-431A-9329-5EB2B75B97A8","name":"invoke","id":16},{"uniqueid":"5F18F21C-5373-486E-8D50-DFC04B0DD297","name":"twiin","id":17},{"uniqueid":"6083680D-3976-4E83-9E31-C6F005259369","name":"vulcan","id":18},{"uniqueid":"34D86AD6-5062-41D1-95FC-34ED92037ED8","name":"botworx","id":19},{"uniqueid":"916F2214-5E1A-4917-8992-0B800661D453","name":"strcturedweb","id":20},{"uniqueid":"2b4c138f-deb0-4472-9a77-c9a07bb1605a","name":"spigit","id":21},{"uniqueid":"bbcb3f7f-e0c3-414a-a612-c49e001d8023","name":"xand","id":22}];
+
+      //var projectGuid=projectUIMap.filter(x=>x.name==curProject)[0].uniqueid;
+      //console.log(`guid:${projectGuid}`) https://public.tableau.com/views/teamplate-productivity/Developmenthours?:embed=y&:display_count=yes&publish=yes&:toolbar=no&:origin=viz_share_link
+      console.log(`uuis:${puuid.toUpperCase()}`)
       
-        
-        // initViz(project);
+      //var hostMyUrl = "https://public.tableau.com/views/" + puuid.toUpperCase() + "-" + reportCategory + "/";
+      var hostMyUrl = "https://public.tableau.com/views/teamplate"  + "-" + reportCategory + "/";
+      if (reportCategory == "design") {
+        if (!curDesignReport) { return; }
+        hostMyUrl = hostMyUrl + curDesignReport.replace(/ /g, '');
       }
-      </script>
-  </body>
+      else {
+        if (!curproductivityReport) { return; }
+        hostMyUrl = hostMyUrl + curproductivityReport.replace(/ /g, '');;
+      }
+      var paramstring = "?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0"
+
+      // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
+      //    if(project=='node-data'){
+      //    alphaurl="https://public.tableau.com/views/node-data-productivity/Dashboard1";  
+      //    } 
+      //$("#myiframeforreport").attr('src', hostMyUrl + paramstring);
+      var containerDiv = document.getElementById("tableauViz");
+      var options = {
+
+        "Page": "1",
+
+        width: "800px",
+
+        height: "800px",
+
+        hideTabs: true,
+
+        hideToolbar: true,
+
+        onFirstInteractive: function () {
+       if (!viz) {
+        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+           }
+          workbook = viz.getWorkbook();
+
+          activeSheet = workbook.getActiveSheet();
+
+          activeSheet.applyFilterAsync("Project Name", [curProject],
+            tableau.FilterUpdateType.REPLACE);
+
+          //activeSheet.applyFilterAsync("Author Name", ["abhisar", "abhishek"],
+          //  tableau.FilterUpdateType.REPLACE);
+
+          //activeSheet.applyFilterAsync("Author Name", "",
+          //  tableau.FilterUpdateType.ALL);
+
+        }
+
+
+      };
+     // let viz = window.tableau.VizManager.getVizs()[0];
+
+        if (viz) {
+
+            viz.dispose();
+
+        }
+
+     // if (!viz) {
+       
+        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+     //}
+      //else {
+        
+       // viz.getWorkbook().activateSheetAsync(curproductivityReport).then(function () {
+    
+        // });
+     //}
+
+
+
+    }
+
+    function changeproject_bck(projectname, uuid) {
+
+      curProject = projectname;
+      puuid = uuid
+      console.log(uuid)
+      $("#projectNameLable").text(projectname);
+      displayOrChangeTableau(puuid);
+
+      // initViz(project);
+    }
+
+    function changeproject(projectname, uuid) {
+
+      curProject = projectname;
+      currProject1 = projectname;
+      puuid = uuid
+      console.log(uuid)
+      $("#projectNameLable").text(projectname);
+      displayOrChangeTableau(puuid);
+
+
+      var data0 = { spName: "getAuthors", param: curProject };
+
+      var json = JSON.stringify(data0);
+
+
+      $.ajax({
+        type: "POST",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+          addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+              addAuthorCheckBoc(author);
+            })
+          }
+        }
+      });
+
+
+      // initViz(project);
+    }
+
+    function toggleAuthorCheck(element, authorName) {
+     
+      workbook = viz.getWorkbook();
+
+      activeSheet = workbook.getActiveSheet();
+
+      if (activeSheet) {
+        if (element.checked) {
+          if (authorName == "All") {
+            activeSheet.applyFilterAsync("Author Name", "",
+              tableau.FilterUpdateType.ALL);
+            return;
+          }
+
+          authors.forEach((author) => {
+            if (author.name == authorName) {
+              author.isSelected = true;
+            }
+          })
+
+
+        }
+        else {
+          authors.forEach((author) => {
+            if (author.name == authorName) {
+              author.isSelected = false;
+            }
+          })
+          activeSheet.applyFilterAsync("Author Name", [authorName],
+            tableau.FilterUpdateType.REMOVE);
+        }
+        let names = [];
+        authors.forEach((author) => {
+          if (author.isSelected) {
+            names.push(author.name.toLowerCase());
+          }
+        });
+    
+
+        
+
+        activeSheet.applyFilterAsync("Author Name", names,
+          tableau.FilterUpdateType.REPLACE);
+      }
+
+    }
+
+var productivityscores = [];
+var qualityscores = [];
+  //console.log(productivityscore);
+
+  function median(values) {
+    if (values.length === 0) return 0;
+
+    values.sort(function (a, b) {
+      return a - b;
+    });
+
+    var half = Math.floor(values.length / 2);
+
+    if (values.length % 2)
+      return values[half];
+
+    return (values[half - 1] + values[half]) / 2.0;
+  }
+
+  function calculatescore(){
+    let curscores = [];
+    for (let count = 0; count < productivityscores.length; count++) {
+      curscores.push(productivityscores[count].score)
+    }
+    let medianScore = median(curscores);
+    $("#lblminimumscore").text((medianScore).toFixed(2));
+
+    let targetper=Number($("#targetPer").val());
+    let strechPer=Number($("#strechPer").val());
+    
+    if(targetper){
+       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+    }
+
+    if(strechPer){
+       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
+    }
+
+  }
+   function calculateQualityscore(){
+    let curscores = [];
+    for (let count = 0; count < qualityscores.length; count++) {
+      curscores.push(qualityscores[count].score)
+    }
+    let medianScore = median(curscores);
+    $("#lblminimumscore").text((medianScore).toFixed(2));
+
+    let targetper=Number($("#targetPer").val());
+    let strechPer=Number($("#strechPer").val());
+    
+    if(targetper){
+       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+    }
+
+    if(strechPer){
+       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
+    }
+
+  }
+
+
+  function toggleScore(element, score, author) {
+    if (element.checked) {
+      productivityscores.push({ score: score, author: author });
+    }
+    else {
+      let ps;
+      for (let count = 0; count < productivityscores.length; count++) {
+        if (productivityscores[count].author = author) {
+          ps = count;
+        }
+      }
+      ps && productivityscores.splice(ps, 1);
+    }
+    calculatescore();
+  }
+  function togglequalityScore(element, score, author) {
+    if (element.checked) {
+      qualityscores.push({ score: score, author: author });
+    }
+    else {
+      let ps;
+      for (let count = 0; count < qualityscores.length; count++) {
+        if (qualityscores[count].author = author) {
+          ps = count;
+        }
+      }
+      ps && qualityscores.splice(ps, 1);
+    }
+    calculateQualityscore();
+
+    
+  }
+    function addAuthorCheckBoc(author) {
+      $('#productivity').hide();
+      $('#quality').hide()
+       $('#tableauViz').hide()
+      let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
+      $('#authorfilter').append(checkboxstr);
+      $('#authorfilter').show();
+    }
+    function addproductivityScore(author) {
+      node = document.getElementById('if-part');
+      node.style.visibility = 'visible';
+       $('#authorfilter').hide();
+       $('#quality').hide()
+        $('#tableauViz').hide()
+      let checkboxstr = '<input type="checkbox" onchange=""toggleScore(this,&#39;' + author.authorName + '&#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore+'<br />';
+      $('#productivity').append(checkboxstr);
+      $('#productivity').show()
+       $("#reportproductivityLable").text("new productivity");
+    }
+    function qualityScore(author) {
+      node = document.getElementById('if-part');
+      node.style.visibility = 'visible';
+       $('#authorfilter').hide();
+       $('#productivity').hide()
+       $('#tableauViz').hide()
+      let checkboxstr = '<input type="checkbox" onchange=""togglequalityScore(this,&#39;' + author.authorName + '&#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore+'<br />';
+      $('#quality').append(checkboxstr);
+      $('#quality').show()
+       $("#reportproductivityLable").text("new quality");
+    }
+  </script>
+</body>
+
 </html>
