@@ -552,7 +552,8 @@ var qualityscores = [];
   function calculatescore(){
     let curscores = [];
     for (let count = 0; count < productivityscores.length; count++) {
-      curscores.push(productivityscores[count].score)
+      let score = parseFloat(productivityscores[count].score);
+      curscores.push(score);
     }
     let medianScore = median(curscores);
     $("#lblminimumscore").text((medianScore).toFixed(2));
@@ -572,7 +573,8 @@ var qualityscores = [];
    function calculateQualityscore(){
     let curscores = [];
     for (let count = 0; count < qualityscores.length; count++) {
-      curscores.push(qualityscores[count].score)
+      let score = parseFloat(qualityscores[count].score);
+      curscores.push(score);
     }
     let medianScore = median(curscores);
     $("#lblminimumscore").text((medianScore).toFixed(2));
@@ -591,7 +593,7 @@ var qualityscores = [];
   }
 
 
-  function toggleScore(element, score, author) {
+  function toggleScore(element, author, score) {
     if (element.checked) {
       productivityscores.push({ score: score, author: author });
     }
@@ -602,11 +604,11 @@ var qualityscores = [];
           ps = count;
         }
       }
-      ps && productivityscores.splice(ps, 1);
+      productivityscores.splice(ps, 1);
     }
     calculatescore();
   }
-  function togglequalityScore(element, score, author) {
+  function togglequalityScore(element, author, score) {
     if (element.checked) {
       qualityscores.push({ score: score, author: author });
     }
@@ -617,7 +619,7 @@ var qualityscores = [];
           ps = count;
         }
       }
-      ps && qualityscores.splice(ps, 1);
+      qualityscores.splice(ps, 1);
     }
     calculateQualityscore();
 
@@ -637,7 +639,7 @@ var qualityscores = [];
        $('#authorfilter').hide();
        $('#quality').hide()
         $('#tableauViz').hide()
-      let checkboxstr = '<input type="checkbox" onchange=""toggleScore(this,&#39;' + author.authorName + '&#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore+'<br />';
+      let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
       $('#productivity').append(checkboxstr);
       $('#productivity').show()
        $("#reportproductivityLable").text("new productivity");
@@ -648,7 +650,7 @@ var qualityscores = [];
        $('#authorfilter').hide();
        $('#productivity').hide()
        $('#tableauViz').hide()
-      let checkboxstr = '<input type="checkbox" onchange=""togglequalityScore(this,&#39;' + author.authorName + '&#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore+'<br />';
+      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore+'<br />';
       $('#quality').append(checkboxstr);
       $('#quality').show()
        $("#reportproductivityLable").text("new quality");
