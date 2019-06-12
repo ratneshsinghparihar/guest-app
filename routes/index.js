@@ -9,6 +9,9 @@ var UsersRepository = require('../repositories/userrepository');
 var UserProjectAssociationRepository = require('../repositories/userprojectassociationrepository');
 var ProjectsRepository = require('../repositories/projectrepository');
 var container = require('nodedata/di')
+
+const userrepo = new UsersRepository();
+const prjrepo = new ProjectsRepository();
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   let parms = { title: 'Home', active: { home: true } };
@@ -19,7 +22,7 @@ router.get('/', async function (req, res, next) {
 
   if (accessToken && userName) {
     let userLowerName = userName.toLowerCase();
-    let userrepo = new UsersRepository();
+    
     validUsers = await userrepo.doGetUser(userName.toLowerCase())
     let curUser;
     if (validUsers && validUsers.length) {
@@ -34,7 +37,7 @@ router.get('/', async function (req, res, next) {
       let projects = await repo.doGetProjectsForUser(curUserId);
       console.log("projects are ");
       console.log(JSON.stringify(projects));
-      let prjrepo = new ProjectsRepository();
+      
       let ProjName, ProjUuid;
       let ProjObj = {};
       let projArray = []
@@ -92,7 +95,8 @@ router.get('/', async function (req, res, next) {
     parms.signInUrl = authHelper.getAuthUrl();
     parms.debug = parms.signInUrl;
   }
-
+  console.log(parms);
+  res.cookie("context",JSON.stringify(parms));
   res.render('index', parms);
 });
 
@@ -102,6 +106,7 @@ router.get('/alphasense-productivity', async function (req, res, next) {
 
   const accessToken = await authHelper.getAccessToken(req.cookies, res);
   const userName = req.cookies.graph_user_name;
+ 
 
   if (accessToken && userName) {
     parms.user = userName;
@@ -112,6 +117,11 @@ router.get('/alphasense-productivity', async function (req, res, next) {
   }
 
   res.render('reports/alphasense-productivity', parms);
+});
+
+
+router.get('/productivityscore', async function (req, res, next) {
+  
 });
 
 module.exports = router;

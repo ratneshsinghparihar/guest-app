@@ -38,9 +38,9 @@ export default class ProjectsRepository extends DynamicRepository {
     doExecuteSPDashboard(spName: any, param?: any) {
         let sequelize = sequelizeService.getSqlContext();
         return sequelize.query(
-            "exec " + spName +";"
+            "exec " + spName +" '"+ param  +"';"
         ).then((result) => {
-            return result;
+            return result && result.length && result[0];
         }).catch((err) => {
             return err;
         })
@@ -49,7 +49,13 @@ export default class ProjectsRepository extends DynamicRepository {
     doExecuteSPProjectsForProcess(spName: any, param: any) {
         let sequelize = sequelizeService.getSqlContext();
         return sequelize.query(
-            "declare @projectNames varchar(2000)= '" + param["projectNames"] + "',@mainGitAnalysis bit="+param["mainGitAnalysis"]+",@prepareMainStatus bit="+param["prepareMainStatus"]+",@mainCiceroAnalysis bit="+param["mainCiceroAnalysis"]+",@mainSonarAnalysis bit="+param["mainSonarAnalysis"]+",@productivityjob bit="+param["productivityjob"]+",@SonarETL bit="+param["SonarETL"]+",@analytics bit="+param["analytics"]+",@combineCeicroModelsOfall bit="+param["combineCeicroModelsOfall"]+";exec " + spName+" @projectNames,@mainGitAnalysis,@prepareMainStatus,@mainCiceroAnalysis,@mainSonarAnalysis,@productivityjob,@SonarETL,@analytics,@combineCeicroModelsOfall;"
+            "declare @projectNames varchar(2000)= '" + param["projectNames"] +
+             "',@mainGitAnalysis bit="+param["mainGitAnalysis"]+",@prepareMainStatus bit="+param["prepareMainStatus"]+
+             ",@mainCiceroAnalysis bit="+param["mainCiceroAnalysis"]+",@mainSonarAnalysis bit="+param["mainSonarAnalysis"]+
+             ",@productivityjob bit="+param["productivityjob"]+",@SonarETL bit="+param["SonarETL"]+
+             ",@analytics bit="+param["analytics"]+",@combineCeicroModelsOfall bit="+param["combineCeicroModelsOfall"]+
+             ",@UpdateReportStatus bit="+param["UpdateReportStatus"]+
+             ";exec " + spName+" @projectNames,@mainGitAnalysis,@prepareMainStatus,@mainCiceroAnalysis,@mainSonarAnalysis,@productivityjob,@SonarETL,@analytics,@combineCeicroModelsOfall,@UpdateReportStatus;"
             )
         //     .then((result) => {
         //     return {result:"success"};
