@@ -1,0 +1,73 @@
+<input id="targetPer" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
+<input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+<label >Minimum</label>
+<label id="lblminimumscore" style="background-color: #71f28a" >0.0</label>
+<label >Target</label>
+<label id="lbltargetscore"  style="background-color: #59c16d" >0.0</label>
+<label >Strech</label>
+<label id="lblstrechscore"  style="background-color: #3a7f47" >0.0</label>
+</br>
+{{#each productivityscore}}
+<input type="checkbox" name="vehicle" value="Bike" onchange="toggleScore(this,{{productivityScore}},'{{authorName}}');"> {{authorName}} {{productivityScore}}
+</input>
+<br> {{/each}}
+
+
+<script>
+  var productivityscores = [];
+  //console.log(productivityscore);
+
+  function median(values) {
+    if (values.length === 0) return 0;
+
+    values.sort(function (a, b) {
+      return a - b;
+    });
+
+    var half = Math.floor(values.length / 2);
+
+    if (values.length % 2)
+      return values[half];
+
+    return (values[half - 1] + values[half]) / 2.0;
+  }
+
+  function calculatescore(){
+    let curscores = [];
+    for (let count = 0; count < productivityscores.length; count++) {
+      curscores.push(productivityscores[count].score)
+    }
+    let medianScore = median(curscores);
+    $("#lblminimumscore").text((medianScore).toFixed(2));
+
+    let targetper=Number($("#targetPer").val());
+    let strechPer=Number($("#strechPer").val());
+    
+    if(targetper){
+       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+    }
+
+    if(strechPer){
+       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
+    }
+
+  }
+
+  function toggleScore(element, score, author) {
+    if (element.checked) {
+      productivityscores.push({ score: score, author: author });
+    }
+    else {
+      let ps;
+      for (let count = 0; count < productivityscores.length; count++) {
+        if (productivityscores[count].author = author) {
+          ps = count;
+        }
+      }
+      ps && productivityscores.splice(ps, 1);
+    }
+    calculatescore();
+
+    
+  }
+</script>
