@@ -104,7 +104,7 @@ license information.}}
 
           </div>
         </li>
-
+        
         {{!--
         <li class="nav-item{{#if active.inbox}} active{{/if}}">
           <a class="nav-link" href="/mail">Inbox</a>
@@ -122,7 +122,6 @@ license information.}}
           <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user}}</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/How to Use Value measure tool.docx">VM Doc</a>
-            <a class="dropdown-item" href="/Value Measure 2.0 Explained.docx">VM Score Guide Lines</a>
             <a class="dropdown-item" href="/Value Measure using automated tools .docx">VM Tool Doc</a>
             <a class="dropdown-item" href="/Value Measure.pptx">2018 Overview</a>
             <a class="dropdown-item" href="/VM 2.0 Process.bmp">Process</a>
@@ -145,9 +144,23 @@ license information.}}
     <iframe id='myiframeforreport' frameborder="0" marginheight="0" marginwidth="0" title="data visualization"
       allowtransparency="true" allowfullscreen="true" class="tableauViz" style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-height: 987px; max-height: 1087px; height: 948px; margin: 0px; padding: 0px; border: none;">
     </iframe> --}}
+   
     <div class="row">
       <div id="tableauViz"></div>
       <div id="authorfilter"></div>
+      <div id='if-part' style='visibility: hidden;'>
+          <input id="targetPer" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
+<input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+<label >Minimum</label>
+<label id="lblminimumscore" style="background-color: #71f28a" >0.0</label>
+<label >Target</label>
+<label id="lbltargetscore"  style="background-color: #59c16d" >0.0</label>
+<label >Strech</label>
+<label id="lblstrechscore"  style="background-color: #3a7f47" >0.0</label>
+ </div>
+      <div id="productivity"></div>
+     <div id = "quality"></div>
+     
     </div>
     <!-- Debug output -->
 
@@ -176,6 +189,7 @@ license information.}}
     var curproductivityReport = "";
     var curproductivityReport = "";
     var curProject = "";
+    var currProject1 = ""
     var reportCategory = "";
     var puuid = "";
     var activeSheet;
@@ -192,13 +206,78 @@ license information.}}
 
 
     function redirectProductivity() {
-      let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
-      window.location = "https://172.19.101.120:3333" + href;
+    
+
+     let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
+      //console.log('ghdgsdhfgghdgsdhfg')
+      //window.location = "https://localhost:3333" + href;
+      let url = "https://172.19.101.120:3333" + href;
+     
+     // window.history.pushState(null, null, url);
+      //window.location.replace(url);
+     //  window.location = url;
+       //location.assign(url);
+     
+        //$("#reportproductivityLable").text("mist2019march");
+
+
+      
+      //displayOrChangeTableau(puuid);
+
+
+      var data0 = { spName: "getProductivityScore", param: curProject };
+
+      var json = JSON.stringify(data0);
+
+
+      $.ajax({
+        type: "POST",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+        // addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+             addproductivityScore(author);
+            })
+          }
+          
+          
+        }
+      });
     }
 
     function redirectQuality() {
-      let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
-      window.location = "https://172.19.101.120:3333" + href;
+     // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
+     // window.location = "https://localhost:3333" + href;
+      var data0 = { spName: "getQualityScore", param: curProject };
+
+      var json = JSON.stringify(data0);
+
+
+      $.ajax({
+        type: "POST",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+        // addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+             qualityScore(author);
+            })
+          }
+          
+          
+        }
+      });
     }
 
     function changerlablereport(report) {
@@ -211,6 +290,12 @@ license information.}}
       reportCategory = "productivity";
       $("#reportproductivityLable").text(report);
       displayOrChangeTableau(puuid);
+       $('#tableauViz').show();
+        $('#productivity').hide();
+      $('#quality').hide()
+       node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
+      $('#authorfilter').show();
 
     }
 
@@ -275,6 +360,7 @@ license information.}}
       //var projectGuid=projectUIMap.filter(x=>x.name==curProject)[0].uniqueid;
       //console.log(`guid:${projectGuid}`) https://public.tableau.com/views/teamplate-productivity/Developmenthours?:embed=y&:display_count=yes&publish=yes&:toolbar=no&:origin=viz_share_link
       console.log(`uuis:${puuid.toUpperCase()}`)
+      
       //var hostMyUrl = "https://public.tableau.com/views/" + puuid.toUpperCase() + "-" + reportCategory + "/";
       var hostMyUrl = "https://public.tableau.com/views/teamplate"  + "-" + reportCategory + "/";
       if (reportCategory == "design") {
@@ -306,13 +392,15 @@ license information.}}
         hideToolbar: true,
 
         onFirstInteractive: function () {
-
+       if (!viz) {
+        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+           }
           workbook = viz.getWorkbook();
 
           activeSheet = workbook.getActiveSheet();
 
           activeSheet.applyFilterAsync("Project Name", [curProject],
-          tableau.FilterUpdateType.REPLACE);
+            tableau.FilterUpdateType.REPLACE);
 
           //activeSheet.applyFilterAsync("Author Name", ["abhisar", "abhishek"],
           //  tableau.FilterUpdateType.REPLACE);
@@ -324,13 +412,24 @@ license information.}}
 
 
       };
+     // let viz = window.tableau.VizManager.getVizs()[0];
 
-      if (!viz) {
+        if (viz) {
+
+            viz.dispose();
+
+        }
+
+     // if (!viz) {
+       
         viz = new tableau.Viz(containerDiv, hostMyUrl, options);
-      }
-      else {
-        viz.getWorkbook().activateSheetAsync(curproductivityReport);
-      }
+     //}
+      //else {
+        
+       // viz.getWorkbook().activateSheetAsync(curproductivityReport).then(function () {
+    
+        // });
+     //}
 
 
 
@@ -344,15 +443,13 @@ license information.}}
       $("#projectNameLable").text(projectname);
       displayOrChangeTableau(puuid);
 
-
-
-
       // initViz(project);
     }
 
     function changeproject(projectname, uuid) {
 
       curProject = projectname;
+      currProject1 = projectname;
       puuid = uuid
       console.log(uuid)
       $("#projectNameLable").text(projectname);
@@ -387,7 +484,7 @@ license information.}}
     }
 
     function toggleAuthorCheck(element, authorName) {
-
+     
       workbook = viz.getWorkbook();
 
       activeSheet = workbook.getActiveSheet();
@@ -433,10 +530,130 @@ license information.}}
 
     }
 
+var productivityscores = [];
+var qualityscores = [];
+  //console.log(productivityscore);
 
+  function median(values) {
+    if (values.length === 0) return 0;
+
+    values.sort(function (a, b) {
+      return a - b;
+    });
+
+    var half = Math.floor(values.length / 2);
+
+    if (values.length % 2)
+      return values[half];
+
+    return (values[half - 1] + values[half]) / 2.0;
+  }
+
+  function calculatescore(){
+    let curscores = [];
+    for (let count = 0; count < productivityscores.length; count++) {
+      let score = parseFloat(productivityscores[count].score);
+      curscores.push(score);
+    }
+    let medianScore = median(curscores);
+    $("#lblminimumscore").text((medianScore).toFixed(2));
+
+    let targetper=Number($("#targetPer").val());
+    let strechPer=Number($("#strechPer").val());
+    
+    if(targetper){
+       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+    }
+
+    if(strechPer){
+       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
+    }
+
+  }
+   function calculateQualityscore(){
+    let curscores = [];
+    for (let count = 0; count < qualityscores.length; count++) {
+      let score = parseFloat(qualityscores[count].score);
+      curscores.push(score);
+    }
+    let medianScore = median(curscores);
+    $("#lblminimumscore").text((medianScore).toFixed(2));
+
+    let targetper=Number($("#targetPer").val());
+    let strechPer=Number($("#strechPer").val());
+    
+    if(targetper){
+       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+    }
+
+    if(strechPer){
+       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
+    }
+
+  }
+
+
+  function toggleScore(element, author, score) {
+    if (element.checked) {
+      productivityscores.push({ score: score, author: author });
+    }
+    else {
+      let ps;
+      for (let count = 0; count < productivityscores.length; count++) {
+        if (productivityscores[count].author = author) {
+          ps = count;
+        }
+      }
+      productivityscores.splice(ps, 1);
+    }
+    calculatescore();
+  }
+  function togglequalityScore(element, author, score) {
+    if (element.checked) {
+      qualityscores.push({ score: score, author: author });
+    }
+    else {
+      let ps;
+      for (let count = 0; count < qualityscores.length; count++) {
+        if (qualityscores[count].author = author) {
+          ps = count;
+        }
+      }
+      qualityscores.splice(ps, 1);
+    }
+    calculateQualityscore();
+
+    
+  }
     function addAuthorCheckBoc(author) {
+      $('#productivity').hide();
+      $('#quality').hide()
+       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
       $('#authorfilter').append(checkboxstr);
+      $('#authorfilter').show();
+    }
+    function addproductivityScore(author) {
+      node = document.getElementById('if-part');
+      node.style.visibility = 'visible';
+       $('#authorfilter').hide();
+       $('#quality').hide()
+        $('#tableauViz').hide()
+      let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
+      $('#productivity').append(checkboxstr);
+      $('#productivity').show()
+       $("#reportproductivityLable").text("new productivity");
+    }
+    function qualityScore(author) {
+      node = document.getElementById('if-part');
+      node.style.visibility = 'visible';
+       $('#authorfilter').hide();
+       $('#productivity').hide()
+       $('#tableauViz').hide()
+      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore+'<br />';
+      $('#quality').append(checkboxstr);
+      $('#quality').show()
+       $("#reportproductivityLable").text("new quality");
     }
   </script>
 </body>
