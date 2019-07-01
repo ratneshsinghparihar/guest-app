@@ -45,6 +45,30 @@ export class ProcessStatusModel {
     @column({ name: "combineCeicroModelsOfall", type: Sequelize.BOOLEAN, allowNull: true })
     combineCeicroModelsOfall: boolean;
 
+    @column({ name: "last_run_mga_date", type: Sequelize.DATE, allowNull: true })
+    last_run_mga_date: Date;
+
+    @column({ name: "last_run_mca_date", type: Sequelize.DATE, allowNull: true })
+    last_run_mca_date: Date;
+
+    @column({ name: "last_run_msa_date", type: Sequelize.DATE, allowNull: true })
+    last_run_msa_date: Date;
+
+    @column({ name: "last_run_pj_date", type: Sequelize.DATE, allowNull: true })
+    last_run_pj_date: Date;
+
+    @column({ name: "last_run_setl_date", type: Sequelize.DATE, allowNull: true })
+    last_run_setl_date: Date;
+
+    @column({ name: "last_run_analytics_date", type: Sequelize.DATE, allowNull: true })
+    last_run_analytics_date: Date;
+
+    @column({ name: "last_run_pms_date", type: Sequelize.DATE, allowNull: true })
+    last_run_pms_date: Date;
+
+    @column({ name: "last_run_ccmoa_date", type: Sequelize.DATE, allowNull: true })
+    last_run_ccmoa_date: Date;
+
     static InitialValues(projectName:string){
         let processStatus:ProcessStatusModel=new ProcessStatusModel();
         processStatus.projectname=projectName;
@@ -60,6 +84,15 @@ export class ProcessStatusModel {
         processStatus.productivityjob = true;
         processStatus.sonarAnalysis = true;
         processStatus.prepareConfigurationList = true;
+        processStatus.last_run_mga_date = new Date();
+        processStatus.last_run_mca_date = new Date();
+        processStatus.last_run_msa_date = new Date();
+        processStatus.last_run_pj_date = new Date();
+        processStatus.last_run_setl_date = new Date();
+        processStatus.last_run_analytics_date = new Date();
+        processStatus.last_run_pms_date = new Date();
+        processStatus.last_run_ccmoa_date = new Date();
+   
         return processStatus;
 
     }
