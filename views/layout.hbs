@@ -151,8 +151,10 @@ license information.}}
       <div id="tableauViz"></div>
       <div id="authorfilter"></div>
       <div id='if-part' style='visibility: hidden;'>
-        <input id="targetPer" type="text" value="30" name="Target %" onchange="calculateQualityscore();">Target %</input>
-        <input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculateQualityscore();">Stretch %</input>
+        <input id="targetPer" type="text" value="30" name="Target %" onchange="calculateQualityscore();">Target
+        %</input>
+        <input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculateQualityscore();">Stretch
+        %</input>
         <label>Minimum</label>
         <label id="lblminimumscore" style="background-color: #71f28a">0.0</label>
         <label>Target</label>
@@ -171,7 +173,7 @@ license information.}}
         <label id="lblstrechscoreP" style="background-color: #3a7f47">0.0</label>
       </div>
       <div id="productivity"></div>
-      <div id="qualityanddesign" ></div>
+      <div id="qualityanddesign"></div>
       <div id="quality"></div>
 
     </div>
@@ -309,7 +311,7 @@ license information.}}
       $('#tableauViz').show();
       $('#productivity').hide();
       $('#quality').hide()
-       $('#qualityanddesign').hide()
+      $('#qualityanddesign').hide()
       node = document.getElementById('if-part');
       node.style.visibility = 'hidden';
       node = document.getElementById('if-partproductivity');
@@ -646,6 +648,15 @@ license information.}}
 
     }
     function toggleqality(element) {
+       $("#lblminimumscore").text(0);
+
+     
+        $("#lbltargetscore").text(0);
+    
+
+    
+        $("#lblstrechscore").text(0);
+   
       if (!element.checked) {
         $('#quality').empty()
         if (authors && authors.length) {
@@ -689,7 +700,7 @@ license information.}}
     function addAuthorCheckBoc(author) {
       $('#productivity').hide();
       $('#quality').hide()
-       $('#qualityanddesign').hide()
+      $('#qualityanddesign').hide()
       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
       $('#authorfilter').append(checkboxstr);
@@ -702,7 +713,7 @@ license information.}}
       node.style.visibility = 'hidden';
       $('#authorfilter').hide();
       $('#quality').hide()
-       $('#qualityanddesign').hide()
+      $('#qualityanddesign').hide()
       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
       $('#productivity').append(checkboxstr);
@@ -719,7 +730,7 @@ license information.}}
       $('#authorfilter').hide();
       $('#productivity').hide()
       $('#tableauViz').hide()
-       
+
       if (index == 0) {
         $('#qualityanddesign').empty()
         let qualitycheckboxstr = '<input type="checkbox" onchange="toggleqality(this);" checked= "true" /> ' + "Quality";
@@ -734,7 +745,7 @@ license information.}}
       $('#quality').append(checkboxstr);
       //}
       $('#quality').show()
-       $('#qualityanddesign').show()
+      $('#qualityanddesign').show()
       $("#reportproductivityLable").text("new quality");
     }
   </script>
