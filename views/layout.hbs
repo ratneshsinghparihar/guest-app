@@ -8,8 +8,8 @@ license information.}}
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{title}}</title>
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -42,8 +42,8 @@ license information.}}
   <!-- Nav bar -->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="/index">Project Cicero</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -54,17 +54,18 @@ license information.}}
         {{#if user}}
 
         <li class="nav-item dropdown">
-          <a id="projectNameLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-            aria-expanded="false">projects</a>
+          <a id="projectNameLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">projects</a>
           <div class="dropdown-menu">
             {{#each projectAccess}}
-            <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
+            <a class="dropdown-item"
+              onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
             {{/each}}
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a id="reportproductivityLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-            aria-expanded="false">Productivity reports</a>
+          <a id="reportproductivityLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">Productivity reports</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" onclick="changereportproductivity('Development hours');">Development hours</a>
             <a class="dropdown-item" onclick="changereportproductivity('Dashboard 1');">Dashboard 1</a>
@@ -82,8 +83,8 @@ license information.}}
           </div>
         </li>
         <li class="nav-item dropdown">
-          <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-            aria-expanded="false">Design reports</a>
+          <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">Design reports</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" onclick="changereportdesign('Dashboard 1');">Dashboard 1</a>
             <a class="dropdown-item" onclick="changereportdesign('Serial Killers');">Serial Killers</a>
@@ -94,8 +95,8 @@ license information.}}
         </li>
 
         <li class="nav-item dropdown">
-          <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-            aria-expanded="false">organization lebels</a>
+          <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+            aria-haspopup="true" aria-expanded="false">organization lebels</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
             <a class="dropdown-item" onclick="changerlablereport('design-qulaity');">design-quality</a>
@@ -104,7 +105,7 @@ license information.}}
 
           </div>
         </li>
-        
+
         {{!--
         <li class="nav-item{{#if active.inbox}} active{{/if}}">
           <a class="nav-link" href="/mail">Inbox</a>
@@ -119,7 +120,8 @@ license information.}}
       <ul class="navbar-nav justify-content-end">
         {{#if user}}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{user}}</a>
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">{{user}}</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="/How to Use Value measure tool.docx">VM Doc</a>
             <a class="dropdown-item" href="/Value Measure using automated tools .docx">VM Tool Doc</a>
@@ -144,23 +146,36 @@ license information.}}
     <iframe id='myiframeforreport' frameborder="0" marginheight="0" marginwidth="0" title="data visualization"
       allowtransparency="true" allowfullscreen="true" class="tableauViz" style="display: block; min-width: 1020px; max-width: 1120px; width: 100%; min-height: 987px; max-height: 1087px; height: 948px; margin: 0px; padding: 0px; border: none;">
     </iframe> --}}
-   
+
     <div class="row">
       <div id="tableauViz"></div>
       <div id="authorfilter"></div>
       <div id='if-part' style='visibility: hidden;'>
-          <input id="targetPer" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
-<input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
-<label >Minimum</label>
-<label id="lblminimumscore" style="background-color: #71f28a" >0.0</label>
-<label >Target</label>
-<label id="lbltargetscore"  style="background-color: #59c16d" >0.0</label>
-<label >Strech</label>
-<label id="lblstrechscore"  style="background-color: #3a7f47" >0.0</label>
- </div>
+        <input id="targetPer" type="text" value="30" name="Target %" onchange="calculateQualityscore();">Target
+        %</input>
+        <input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculateQualityscore();">Stretch
+        %</input>
+        <label>Minimum</label>
+        <label id="lblminimumscore" style="background-color: #71f28a">0.0</label>
+        <label>Target</label>
+        <label id="lbltargetscore" style="background-color: #59c16d">0.0</label>
+        <label>Strech</label>
+        <label id="lblstrechscore" style="background-color: #3a7f47">0.0</label>
+      </div>
+      <div id='if-partproductivity' style='visibility: hidden;'>
+        <input id="targetPerP" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
+        <input id="strechPerP" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+        <label>Minimum</label>
+        <label id="lblminimumscoreP" style="background-color: #71f28a">0.0</label>
+        <label>Target</label>
+        <label id="lbltargetscoreP" style="background-color: #59c16d">0.0</label>
+        <label>Strech</label>
+        <label id="lblstrechscoreP" style="background-color: #3a7f47">0.0</label>
+      </div>
       <div id="productivity"></div>
-     <div id = "quality"></div>
-     
+      <div id="qualityanddesign"></div>
+      <div id="quality"></div>
+
     </div>
     <!-- Debug output -->
 
@@ -180,9 +195,11 @@ license information.}}
   <!-- Bootstrap core JavaScript
     ================================================== -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script>
     var curDesignReport = "";
@@ -206,29 +223,29 @@ license information.}}
 
 
     function redirectProductivity() {
-    
 
-     let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
+
+      let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
       //console.log('ghdgsdhfgghdgsdhfg')
       //window.location = "https://localhost:3333" + href;
       let url = "https://172.19.101.120:3333" + href;
-     
-     // window.history.pushState(null, null, url);
+
+      // window.history.pushState(null, null, url);
       //window.location.replace(url);
-     //  window.location = url;
-       //location.assign(url);
-     
-        //$("#reportproductivityLable").text("mist2019march");
+      //  window.location = url;
+      //location.assign(url);
+
+      //$("#reportproductivityLable").text("mist2019march");
 
 
-      
+
       //displayOrChangeTableau(puuid);
 
 
       var data0 = { spName: "getProductivityScore", param: curProject };
 
       var json = JSON.stringify(data0);
-
+      $('#productivity').empty();
 
       $.ajax({
         type: "POST",
@@ -239,24 +256,27 @@ license information.}}
         success: function (msg) {
           // alert('In Ajax');
           authors = msg;
-        // addAuthorCheckBoc({ "name": "All" });
+          // addAuthorCheckBoc({ "name": "All" });
           if (authors && authors.length) {
             authors.forEach((author) => {
-             addproductivityScore(author);
+              addproductivityScore(author);
             })
           }
-          
-          
+
+
         }
       });
     }
 
     function redirectQuality() {
-     // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
-     // window.location = "https://localhost:3333" + href;
+      // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
+      // window.location = "https://localhost:3333" + href;
       var data0 = { spName: "getQualityScore", param: curProject };
 
       var json = JSON.stringify(data0);
+
+
+      $('#quality').empty();
 
 
       $.ajax({
@@ -268,14 +288,12 @@ license information.}}
         success: function (msg) {
           // alert('In Ajax');
           authors = msg;
-        // addAuthorCheckBoc({ "name": "All" });
           if (authors && authors.length) {
-            authors.forEach((author) => {
-             qualityScore(author);
-            })
+            for (const [index, author] of authors.entries()) {
+              qualityScore(index, author);
+            }
           }
-          
-          
+
         }
       });
     }
@@ -290,10 +308,13 @@ license information.}}
       reportCategory = "productivity";
       $("#reportproductivityLable").text(report);
       displayOrChangeTableau(puuid);
-       $('#tableauViz').show();
-        $('#productivity').hide();
+      $('#tableauViz').show();
+      $('#productivity').hide();
       $('#quality').hide()
-       node = document.getElementById('if-part');
+      $('#qualityanddesign').hide()
+      node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
+      node = document.getElementById('if-partproductivity');
       node.style.visibility = 'hidden';
       $('#authorfilter').show();
 
@@ -360,9 +381,9 @@ license information.}}
       //var projectGuid=projectUIMap.filter(x=>x.name==curProject)[0].uniqueid;
       //console.log(`guid:${projectGuid}`) https://public.tableau.com/views/teamplate-productivity/Developmenthours?:embed=y&:display_count=yes&publish=yes&:toolbar=no&:origin=viz_share_link
       console.log(`uuis:${puuid.toUpperCase()}`)
-      
+
       //var hostMyUrl = "https://public.tableau.com/views/" + puuid.toUpperCase() + "-" + reportCategory + "/";
-      var hostMyUrl = "https://public.tableau.com/views/teamplate"  + "-" + reportCategory + "/";
+      var hostMyUrl = "https://public.tableau.com/views/teamplate" + "-" + reportCategory + "/";
       if (reportCategory == "design") {
         if (!curDesignReport) { return; }
         hostMyUrl = hostMyUrl + curDesignReport.replace(/ /g, '');
@@ -392,9 +413,9 @@ license information.}}
         hideToolbar: true,
 
         onFirstInteractive: function () {
-       if (!viz) {
-        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
-           }
+          if (!viz) {
+            viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+          }
           workbook = viz.getWorkbook();
 
           activeSheet = workbook.getActiveSheet();
@@ -412,24 +433,24 @@ license information.}}
 
 
       };
-     // let viz = window.tableau.VizManager.getVizs()[0];
+      // let viz = window.tableau.VizManager.getVizs()[0];
 
-        if (viz) {
+      if (viz) {
 
-            viz.dispose();
+        viz.dispose();
 
-        }
+      }
 
-     // if (!viz) {
-       
-        viz = new tableau.Viz(containerDiv, hostMyUrl, options);
-     //}
+      // if (!viz) {
+
+      viz = new tableau.Viz(containerDiv, hostMyUrl, options);
+      //}
       //else {
-        
-       // viz.getWorkbook().activateSheetAsync(curproductivityReport).then(function () {
-    
-        // });
-     //}
+
+      // viz.getWorkbook().activateSheetAsync(curproductivityReport).then(function () {
+
+      // });
+      //}
 
 
 
@@ -485,7 +506,7 @@ license information.}}
     }
 
     function toggleAuthorCheck(element, authorName) {
-     
+
       workbook = viz.getWorkbook();
 
       activeSheet = workbook.getActiveSheet();
@@ -521,9 +542,9 @@ license information.}}
             names.push(author.name.toLowerCase());
           }
         });
-    
 
-        
+
+
 
         activeSheet.applyFilterAsync("Author Name", names,
           tableau.FilterUpdateType.REPLACE);
@@ -531,130 +552,201 @@ license information.}}
 
     }
 
-var productivityscores = [];
-var qualityscores = [];
-  //console.log(productivityscore);
+    var productivityscores = [];
+    var qualityscores = [];
+    //console.log(productivityscore);
 
-  function median(values) {
-    if (values.length === 0) return 0;
+    function median(values) {
+      if (values.length === 0) return 0;
 
-    values.sort(function (a, b) {
-      return a - b;
-    });
+      values.sort(function (a, b) {
+        return a - b;
+      });
 
-    var half = Math.floor(values.length / 2);
+      var half = Math.floor(values.length / 2);
 
-    if (values.length % 2)
-      return values[half];
+      if (values.length % 2)
+        return values[half];
 
-    return (values[half - 1] + values[half]) / 2.0;
-  }
-
-  function calculatescore(){
-    let curscores = [];
-    for (let count = 0; count < productivityscores.length; count++) {
-      let score = parseFloat(productivityscores[count].score);
-      curscores.push(score);
-    }
-    let medianScore = median(curscores);
-    $("#lblminimumscore").text((medianScore).toFixed(2));
-
-    let targetper=Number($("#targetPer").val());
-    let strechPer=Number($("#strechPer").val());
-    
-    if(targetper){
-       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
+      return (values[half - 1] + values[half]) / 2.0;
     }
 
-    if(strechPer){
-       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
-    }
-
-  }
-   function calculateQualityscore(){
-    let curscores = [];
-    for (let count = 0; count < qualityscores.length; count++) {
-      let score = parseFloat(qualityscores[count].score);
-      curscores.push(score);
-    }
-    let medianScore = median(curscores);
-    $("#lblminimumscore").text((medianScore).toFixed(2));
-
-    let targetper=Number($("#targetPer").val());
-    let strechPer=Number($("#strechPer").val());
-    
-    if(targetper){
-       $("#lbltargetscore").text( ( medianScore + ((targetper/100)*medianScore) ).toFixed(2)  );
-    }
-
-    if(strechPer){
-       $("#lblstrechscore").text( ( medianScore + ((strechPer/100)*medianScore)).toFixed(2)  );
-    }
-
-  }
-
-
-  function toggleScore(element, author, score) {
-    if (element.checked) {
-      productivityscores.push({ score: score, author: author });
-    }
-    else {
-      let ps;
+    function calculatescore() {
+      let curscores = [];
       for (let count = 0; count < productivityscores.length; count++) {
-        if (productivityscores[count].author = author) {
-          ps = count;
-        }
+        let score = parseFloat(productivityscores[count].score);
+        curscores.push(score);
       }
-      productivityscores.splice(ps, 1);
+      let medianScore = median(curscores);
+      $("#lblminimumscoreP").text((medianScore).toFixed(2));
+
+      let targetper = Number($("#targetPerP").val());
+      let strechPer = Number($("#strechPerP").val());
+
+      if (targetper) {
+        $("#lbltargetscoreP").text((medianScore + ((targetper / 100) * medianScore)).toFixed(2));
+      }
+
+      if (strechPer) {
+        $("#lblstrechscoreP").text((medianScore + ((strechPer / 100) * medianScore)).toFixed(2));
+      }
+
     }
-    calculatescore();
-  }
-  function togglequalityScore(element, author, score) {
-    if (element.checked) {
-      qualityscores.push({ score: score, author: author });
-    }
-    else {
-      let ps;
+    function calculateQualityscore() {
+      let curscores = [];
       for (let count = 0; count < qualityscores.length; count++) {
-        if (qualityscores[count].author = author) {
-          ps = count;
-        }
+        let score = parseFloat(qualityscores[count].score);
+        curscores.push(score);
       }
-      qualityscores.splice(ps, 1);
+      let medianScore = median(curscores);
+      $("#lblminimumscore").text((medianScore).toFixed(2));
+
+      let targetper = Number($("#targetPer").val());
+      let strechPer = Number($("#strechPer").val());
+
+      if (targetper) {
+        $("#lbltargetscore").text((medianScore - ((targetper / 100) * medianScore)).toFixed(2));
+      }
+
+      if (strechPer) {
+        $("#lblstrechscore").text((medianScore - ((strechPer / 100) * medianScore)).toFixed(2));
+      }
+
     }
-    calculateQualityscore();
+
+
+    function toggleScore(element, author, score) {
+      if (element.checked) {
+        productivityscores.push({ score: score, author: author });
+      }
+      else {
+        let ps;
+        for (let count = 0; count < productivityscores.length; count++) {
+          if (productivityscores[count].author = author) {
+            ps = count;
+          }
+        }
+        productivityscores.splice(ps, 1);
+      }
+      calculatescore();
+    }
+    function togglequalityScore(element, author, score) {
+      if (element.checked) {
+        qualityscores.push({ score: score, author: author });
+      }
+      else {
+        let ps;
+        for (let count = 0; count < qualityscores.length; count++) {
+          if (qualityscores[count].author = author) {
+            ps = count;
+          }
+        }
+        qualityscores.splice(ps, 1);
+      }
+      calculateQualityscore();
+
+
+    }
+    function toggleqality(element) {
+       $("#lblminimumscore").text(0);
+
+     
+        $("#lbltargetscore").text(0);
+    
 
     
-  }
+        $("#lblstrechscore").text(0);
+   
+      if (!element.checked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.design_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.design_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      }
+    }
+
+    function toggleDesign(element) {
+
+      if (!element.checked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.quality_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.quality_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      }
+
+    }
     function addAuthorCheckBoc(author) {
       $('#productivity').hide();
       $('#quality').hide()
-       $('#tableauViz').hide()
+      $('#qualityanddesign').hide()
+      $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
       $('#authorfilter').append(checkboxstr);
       $('#authorfilter').show();
     }
     function addproductivityScore(author) {
-      node = document.getElementById('if-part');
+      node = document.getElementById('if-partproductivity');
       node.style.visibility = 'visible';
-       $('#authorfilter').hide();
-       $('#quality').hide()
-        $('#tableauViz').hide()
+      node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
+      $('#authorfilter').hide();
+      $('#quality').hide()
+      $('#qualityanddesign').hide()
+      $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
       $('#productivity').append(checkboxstr);
       $('#productivity').show()
-       $("#reportproductivityLable").text("new productivity");
+      $("#reportproductivityLable").text("new productivity");
     }
-    function qualityScore(author) {
+
+    function qualityScore(index, author) {
       node = document.getElementById('if-part');
       node.style.visibility = 'visible';
-       $('#authorfilter').hide();
-       $('#productivity').hide()
-       $('#tableauViz').hide()
-      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore+'<br />';
+      nodeP = document.getElementById('if-partproductivity');
+      nodeP.style.visibility = 'hidden';
+
+      $('#authorfilter').hide();
+      $('#productivity').hide()
+      $('#tableauViz').hide()
+
+      if (index == 0) {
+        $('#qualityanddesign').empty()
+        let qualitycheckboxstr = '<input type="checkbox" onchange="toggleqality(this);" checked= "true" /> ' + "Quality";
+        let designcheckboxstr = '<input type="checkbox" onchange="toggleDesign(this);" checked= "true" /> ' + "Design" + '<br />';
+        $('#qualityanddesign').append(qualitycheckboxstr);
+        $('#qualityanddesign').append(designcheckboxstr);
+
+      }
+
+      // else {
+      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
       $('#quality').append(checkboxstr);
+      //}
       $('#quality').show()
-       $("#reportproductivityLable").text("new quality");
+      $('#qualityanddesign').show()
+      $("#reportproductivityLable").text("new quality");
     }
   </script>
 </body>
