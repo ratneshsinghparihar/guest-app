@@ -658,7 +658,7 @@ license information.}}
       $('#authorfilter').hide();
       $('#productivity').hide()
       $('#tableauViz').hide()
-      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + author.qualityScore + '<br />';
+      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
       $('#quality').append(checkboxstr);
       $('#quality').show()
       $("#reportproductivityLable").text("new quality");
