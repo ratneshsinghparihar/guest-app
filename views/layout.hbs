@@ -648,14 +648,14 @@ license information.}}
 
     }
     function toggleqality(element) {
-       $("#lblminimumscore").text(0);
+       $("#lblminimumscore").text(0.0);
 
      
-        $("#lbltargetscore").text(0);
+        $("#lbltargetscore").text(0.0);
     
 
     
-        $("#lblstrechscore").text(0);
+        $("#lblstrechscore").text(0.0);
    
       if (!element.checked) {
         $('#quality').empty()
@@ -677,7 +677,14 @@ license information.}}
     }
 
     function toggleDesign(element) {
+        $("#lblminimumscore").text(0.0);
 
+     
+        $("#lbltargetscore").text(0.0);
+    
+
+    
+        $("#lblstrechscore").text(0.0);
       if (!element.checked) {
         $('#quality').empty()
         if (authors && authors.length) {
