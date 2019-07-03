@@ -151,8 +151,8 @@ license information.}}
       <div id="tableauViz"></div>
       <div id="authorfilter"></div>
       <div id='if-part' style='visibility: hidden;'>
-        <input id="targetPer" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
-        <input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+        <input id="targetPer" type="text" value="30" name="Target %" onchange="calculateQualityscore();">Target %</input>
+        <input id="strechPer" type="text" value="40" name="Stretch %" onchange="calculateQualityscore();">Stretch %</input>
         <label>Minimum</label>
         <label id="lblminimumscore" style="background-color: #71f28a">0.0</label>
         <label>Target</label>
@@ -160,7 +160,18 @@ license information.}}
         <label>Strech</label>
         <label id="lblstrechscore" style="background-color: #3a7f47">0.0</label>
       </div>
+      <div id='if-partproductivity' style='visibility: hidden;'>
+        <input id="targetPerP" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
+        <input id="strechPerP" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+        <label>Minimum</label>
+        <label id="lblminimumscoreP" style="background-color: #71f28a">0.0</label>
+        <label>Target</label>
+        <label id="lbltargetscoreP" style="background-color: #59c16d">0.0</label>
+        <label>Strech</label>
+        <label id="lblstrechscoreP" style="background-color: #3a7f47">0.0</label>
+      </div>
       <div id="productivity"></div>
+      <div id="qualityanddesign" ></div>
       <div id="quality"></div>
 
     </div>
@@ -265,6 +276,7 @@ license information.}}
 
       $('#quality').empty();
 
+
       $.ajax({
         type: "POST",
         url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
@@ -274,13 +286,11 @@ license information.}}
         success: function (msg) {
           // alert('In Ajax');
           authors = msg;
-          // addAuthorCheckBoc({ "name": "All" });
           if (authors && authors.length) {
-            authors.forEach((author) => {
-              qualityScore(author);
-            })
+            for (const [index, author] of authors.entries()) {
+              qualityScore(index, author);
+            }
           }
-
 
         }
       });
@@ -299,7 +309,10 @@ license information.}}
       $('#tableauViz').show();
       $('#productivity').hide();
       $('#quality').hide()
+       $('#qualityanddesign').hide()
       node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
+      node = document.getElementById('if-partproductivity');
       node.style.visibility = 'hidden';
       $('#authorfilter').show();
 
@@ -563,17 +576,17 @@ license information.}}
         curscores.push(score);
       }
       let medianScore = median(curscores);
-      $("#lblminimumscore").text((medianScore).toFixed(2));
+      $("#lblminimumscoreP").text((medianScore).toFixed(2));
 
-      let targetper = Number($("#targetPer").val());
-      let strechPer = Number($("#strechPer").val());
+      let targetper = Number($("#targetPerP").val());
+      let strechPer = Number($("#strechPerP").val());
 
       if (targetper) {
-        $("#lbltargetscore").text((medianScore + ((targetper / 100) * medianScore)).toFixed(2));
+        $("#lbltargetscoreP").text((medianScore + ((targetper / 100) * medianScore)).toFixed(2));
       }
 
       if (strechPer) {
-        $("#lblstrechscore").text((medianScore + ((strechPer / 100) * medianScore)).toFixed(2));
+        $("#lblstrechscoreP").text((medianScore + ((strechPer / 100) * medianScore)).toFixed(2));
       }
 
     }
@@ -590,11 +603,11 @@ license information.}}
       let strechPer = Number($("#strechPer").val());
 
       if (targetper) {
-        $("#lbltargetscore").text((medianScore + ((targetper / 100) * medianScore)).toFixed(2));
+        $("#lbltargetscore").text((medianScore - ((targetper / 100) * medianScore)).toFixed(2));
       }
 
       if (strechPer) {
-        $("#lblstrechscore").text((medianScore + ((strechPer / 100) * medianScore)).toFixed(2));
+        $("#lblstrechscore").text((medianScore - ((strechPer / 100) * medianScore)).toFixed(2));
       }
 
     }
@@ -632,19 +645,64 @@ license information.}}
 
 
     }
+    function toggleqality(element) {
+      if (!element.checked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.design_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.design_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      }
+    }
+
+    function toggleDesign(element) {
+
+      if (!element.checked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.quality_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.quality_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      }
+
+    }
     function addAuthorCheckBoc(author) {
       $('#productivity').hide();
       $('#quality').hide()
+       $('#qualityanddesign').hide()
       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
       $('#authorfilter').append(checkboxstr);
       $('#authorfilter').show();
     }
     function addproductivityScore(author) {
-      node = document.getElementById('if-part');
+      node = document.getElementById('if-partproductivity');
       node.style.visibility = 'visible';
+      node = document.getElementById('if-part');
+      node.style.visibility = 'hidden';
       $('#authorfilter').hide();
       $('#quality').hide()
+       $('#qualityanddesign').hide()
       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
       $('#productivity').append(checkboxstr);
@@ -652,15 +710,31 @@ license information.}}
       $("#reportproductivityLable").text("new productivity");
     }
 
-    function qualityScore(author) {
+    function qualityScore(index, author) {
       node = document.getElementById('if-part');
       node.style.visibility = 'visible';
+      nodeP = document.getElementById('if-partproductivity');
+      nodeP.style.visibility = 'hidden';
+
       $('#authorfilter').hide();
       $('#productivity').hide()
       $('#tableauViz').hide()
+       
+      if (index == 0) {
+        $('#qualityanddesign').empty()
+        let qualitycheckboxstr = '<input type="checkbox" onchange="toggleqality(this);" checked= "true" /> ' + "Quality";
+        let designcheckboxstr = '<input type="checkbox" onchange="toggleDesign(this);" checked= "true" /> ' + "Design" + '<br />';
+        $('#qualityanddesign').append(qualitycheckboxstr);
+        $('#qualityanddesign').append(designcheckboxstr);
+
+      }
+
+      // else {
       let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
       $('#quality').append(checkboxstr);
+      //}
       $('#quality').show()
+       $('#qualityanddesign').show()
       $("#reportproductivityLable").text("new quality");
     }
   </script>
