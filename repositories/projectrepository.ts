@@ -46,6 +46,26 @@ export default class ProjectsRepository extends DynamicRepository {
         })
     }
 
+    doExecuteSPDashboard1(spName: any, param?: any,param1?:any) {
+        let sequelize = sequelizeService.getSqlContext();
+        // EXECUTE  getProductivityScore_abhi
+        // @projectName = 'mist2019march', 
+        //   @dateRange = '01-Mar-2019'
+
+        var strSPname =  "exec " + spName;
+        var strAddParam =  strSPname +  (param ?" '"+ param  +"' ":"")
+        var strAddParam1 = strAddParam + (param1 ?" ,'"+ param1  +"'; ":";")
+        
+        console.log(strAddParam1);
+        return sequelize.query(strAddParam1).then((result) => {
+            return result && result.length && result[0];
+        }).catch((err) => {
+            return err;
+        })
+    }
+
+
+
     doExecuteSPProjectsForProcess(spName: any, param: any) {
         let sequelize = sequelizeService.getSqlContext();
         return sequelize.query(

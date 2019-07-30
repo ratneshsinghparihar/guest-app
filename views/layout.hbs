@@ -172,7 +172,12 @@ license information.}}
         <label>Strech</label>
         <label id="lblstrechscoreP" style="background-color: #3a7f47">0.0</label>
       </div>
-      <div id="productivity"></div>
+      <div class="d-flex">
+      <div id="productivity" > </div>
+      <div id = "datefilter"></div>
+      </div>
+      </div>
+
       <div id="qualityanddesign"></div>
       <div id="quality"></div>
 
@@ -228,7 +233,7 @@ license information.}}
       let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
       //console.log('ghdgsdhfgghdgsdhfg')
       //window.location = "https://localhost:3333" + href;
-      let url = "https://172.19.101.120:3333" + href;
+      let url = "https://localhost:3333" + href;
 
       // window.history.pushState(null, null, url);
       //window.location.replace(url);
@@ -247,9 +252,10 @@ license information.}}
       var json = JSON.stringify(data0);
       $('#productivity').empty();
 
+      addDateFilter();
       $.ajax({
         type: "POST",
-        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -268,6 +274,75 @@ license information.}}
       });
     }
 
+function toggleDateCheck(element, date) {
+
+  if (element.checked) {
+        productivityDates.push({ date: date});
+      }
+      else {
+        let ps;
+        for (let count = 0; count < productivityDates.length; count++) {
+          if (productivityDates[count].date == date) {
+            ps = count;
+          }
+        }
+        productivityDates.splice(ps, 1);
+      }
+    var arrDates = [];
+   productivityDates.forEach((dateObj) => {
+    console.log(`guid:${dateObj}`)
+    arrDates.push(dateObj.date)
+   })
+  
+   let finalDateStr = arrDates.join()
+    console.log(`guid:${finalDateStr}`)
+    if (finalDateStr == "") {
+      let str = "01-Jan-2019,01-Feb-2019,01-Mar-2019,01-Apr-2019,01-May-2019,01-Jun-2019"
+      refreshProductivityAccordingToDates(str)
+    } else {
+ refreshProductivityAccordingToDates(finalDateStr)
+    }
+      //calculatescore();
+
+}
+
+function refreshProductivityAccordingToDates(dateStr) {
+  var data0 = { spName: "getProductivityScore_abhi", param: curProject,param1:dateStr  };
+
+      var json = JSON.stringify(data0);
+      $('#productivity').empty();
+
+      $.ajax({
+        type: "POST",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard1",
+        data: json,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          // alert('In Ajax');
+          authors = msg;
+          // addAuthorCheckBoc({ "name": "All" });
+          if (authors && authors.length) {
+            authors.forEach((author) => {
+              addDateWiseProductivityScore(author);
+            })
+          }
+
+
+        }
+      });
+}
+    function addDateFilter() {
+      //'01-Feb-2019','01-Jan-2019','01-Mar-2019','01-Apr-2019','01-May-2019','01-Jun-2019'
+       $('#datefilter').empty();
+      var arrDate = ["01-Oct-2018","01-Nov-2018","01-Dec-2018","01-Jan-2019","01-Feb-2019", "01-Mar-2019", "01-Apr-2019", "01-May-2019", "01-Jun-2019","01-Jul-2019","01-Aug-2019"];
+      arrDate.forEach((date) => {
+        let checkboxstr = '<input type="checkbox" onchange="toggleDateCheck(this,&#39;' + date+ '&#39;);"    /> ' + date + '<br />';
+        $('#datefilter').append(checkboxstr);
+      });
+       
+    }
+
     function redirectQuality() {
       // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
       // window.location = "https://localhost:3333" + href;
@@ -277,11 +352,10 @@ license information.}}
 
 
       $('#quality').empty();
-
-
+    
       $.ajax({
         type: "POST",
-        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -310,6 +384,7 @@ license information.}}
       displayOrChangeTableau(puuid);
       $('#tableauViz').show();
       $('#productivity').hide();
+       $('#datefilter').hide();
       $('#quality').hide()
       $('#qualityanddesign').hide()
       node = document.getElementById('if-part');
@@ -431,7 +506,6 @@ license information.}}
 
         }
 
-
       };
       // let viz = window.tableau.VizManager.getVizs()[0];
 
@@ -451,8 +525,6 @@ license information.}}
 
       // });
       //}
-
-
 
     }
 
@@ -485,7 +557,7 @@ license information.}}
 
       $.ajax({
         type: "POST",
-        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -554,6 +626,7 @@ license information.}}
 
     var productivityscores = [];
     var qualityscores = [];
+    var productivityDates = [];
     //console.log(productivityscore);
 
     function median(values) {
@@ -648,15 +721,15 @@ license information.}}
 
     }
     function toggleqality(element) {
-	qualityscores = [];
-       $("#lblminimumscore").text(0.0);
+      qualityscores = [];
+       $("#lblminimumscore").text(0);
 
      
-        $("#lbltargetscore").text(0.0);
+        $("#lbltargetscore").text(0);
     
 
     
-        $("#lblstrechscore").text(0.0);
+        $("#lblstrechscore").text(0);
    
       if (!element.checked) {
         $('#quality').empty()
@@ -678,15 +751,7 @@ license information.}}
     }
 
     function toggleDesign(element) {
-	qualityscores = [];
-        $("#lblminimumscore").text(0.0);
-
-     
-        $("#lbltargetscore").text(0.0);
-    
-
-    
-        $("#lblstrechscore").text(0.0);
+qualityscores = [];
       if (!element.checked) {
         $('#quality').empty()
         if (authors && authors.length) {
@@ -708,12 +773,17 @@ license information.}}
     }
     function addAuthorCheckBoc(author) {
       $('#productivity').hide();
+       $('#datefilter').hide();
       $('#quality').hide()
       $('#qualityanddesign').hide()
       $('#tableauViz').hide()
       let checkboxstr = '<input type="checkbox" onchange="toggleAuthorCheck(this,&#39;' + author.name + '&#39;);"    /> ' + author.name + '<br />';
       $('#authorfilter').append(checkboxstr);
       $('#authorfilter').show();
+    }
+    function addDateWiseProductivityScore(author) {
+      let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
+      $('#productivity').append(checkboxstr);
     }
     function addproductivityScore(author) {
       node = document.getElementById('if-partproductivity');
@@ -727,6 +797,7 @@ license information.}}
       let checkboxstr = '<input type="checkbox" onchange="toggleScore(this, &#39;' + author.authorName + '&#39; , &#39;' + author.productivityScore + '&#39;);"    /> ' + author.authorName + author.productivityScore + '<br />';
       $('#productivity').append(checkboxstr);
       $('#productivity').show()
+       $('#datefilter').show()
       $("#reportproductivityLable").text("new productivity");
     }
 
@@ -738,6 +809,7 @@ license information.}}
 
       $('#authorfilter').hide();
       $('#productivity').hide()
+       $('#datefilter').hide()
       $('#tableauViz').hide()
 
       if (index == 0) {
