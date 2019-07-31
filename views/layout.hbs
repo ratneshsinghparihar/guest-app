@@ -275,7 +275,10 @@ license information.}}
     }
 
 function toggleDateCheck(element, date) {
-
+ productivityscores = [];
+        $("#lblminimumscoreP").text(0.0);
+        $("#lbltargetscoreP").text(0.0);
+        $("#lblstrechscoreP").text(0.0);
   if (element.checked) {
         productivityDates.push({ date: date});
       }
