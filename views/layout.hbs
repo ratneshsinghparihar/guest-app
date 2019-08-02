@@ -232,8 +232,8 @@ license information.}}
 
       let href = "/productivityscore?spname=getProductivityScore&projectname=" + curProject;
       //console.log('ghdgsdhfgghdgsdhfg')
-      //window.location = "https://localhost:3333" + href;
-      let url = "https://localhost:3333" + href;
+      //window.location = "https://172.19.101.120:3333" + href;
+      let url = "https://172.19.101.120:3333" + href;
 
       // window.history.pushState(null, null, url);
       //window.location.replace(url);
@@ -255,7 +255,7 @@ license information.}}
       addDateFilter();
       $.ajax({
         type: "POST",
-        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -317,7 +317,7 @@ function refreshProductivityAccordingToDates(dateStr) {
 
       $.ajax({
         type: "POST",
-        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard1",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard1",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -348,7 +348,7 @@ function refreshProductivityAccordingToDates(dateStr) {
 
     function redirectQuality() {
       // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
-      // window.location = "https://localhost:3333" + href;
+      // window.location = "https://172.19.101.120:3333" + href;
       var data0 = { spName: "getQualityScore", param: curProject };
 
       var json = JSON.stringify(data0);
@@ -358,7 +358,7 @@ function refreshProductivityAccordingToDates(dateStr) {
     
       $.ajax({
         type: "POST",
-        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
@@ -560,7 +560,7 @@ function refreshProductivityAccordingToDates(dateStr) {
 
       $.ajax({
         type: "POST",
-        url: "https://localhost:3333/data/projects/action/doExecuteSPDashboard",
+        url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
         data: json,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
