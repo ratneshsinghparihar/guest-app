@@ -27,6 +27,7 @@ router.get('/', async function (req, res, next) {
     let curUser;
     if (validUsers && validUsers.length) {
       parms.user = userLowerName;
+      parms.isAdmin=validUsers[0].dataValues.isAdmin;
       //parms.projectAccess = {};
       curUser = validUsers[0].dataValues.UserEmail;
       curUserId = validUsers[0].dataValues.UserID;

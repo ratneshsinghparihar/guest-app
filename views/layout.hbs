@@ -9,8 +9,8 @@ license information.}}
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{title}}</title>
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-    crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -43,8 +43,8 @@ license information.}}
   <!-- Nav bar -->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="/index">Project Cicero</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
-      aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -59,7 +59,8 @@ license information.}}
             aria-haspopup="true" aria-expanded="false">projects</a>
           <div class="dropdown-menu">
             {{#each projectAccess}}
-            <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
+            <a class="dropdown-item"
+              onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
             {{/each}}
           </div>
         </li>
@@ -82,6 +83,8 @@ license information.}}
 
           </div>
         </li>
+
+
         <li class="nav-item dropdown">
           <a id="reportdesignLable" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
             aria-haspopup="true" aria-expanded="false">Design reports</a>
@@ -94,17 +97,21 @@ license information.}}
           </div>
         </li>
 
+        {{#if isAdmin}}
         <li class="nav-item dropdown">
           <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-            aria-haspopup="true" aria-expanded="false">organization lebels</a>
+            aria-haspopup="true" aria-expanded="false">organization reports</a>
           <div class="dropdown-menu">
             <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
-            <a class="dropdown-item" onclick="changerlablereport('design-qulaity');">design-quality</a>
-            <a class="dropdown-item" onclick="changerlablereport('Utilization');">Utilization</a>
+            <a class="dropdown-item" onclick="changerlablereport('quality');">Quality</a>
+            <a class="dropdown-item" onclick="changerlablereport('productivity_imporvement');">Productivity Improvment</a>
+            <a class="dropdown-item" onclick="changerlablereport('quality_imporvement');">Quality Improvment</a>
+            <a class="dropdown-item" onclick="changerlablereport('topdevs');">top developers</a>
             <a class="dropdown-item" onclick="showGridData();">Label Data</a>
 
           </div>
         </li>
+        {{/if}}
 
         {{!--
         <li class="nav-item{{#if active.inbox}} active{{/if}}">
@@ -200,9 +207,11 @@ license information.}}
   <!-- Bootstrap core JavaScript
     ================================================== -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script>
     var curDesignReport = "";
@@ -392,16 +401,16 @@ license information.}}
       node.style.visibility = 'hidden';
       node = document.getElementById('if-partproductivity');
       node.style.visibility = 'hidden';
-      
+
       $('#authorfilter').show();
       //resetAuthorCheck();
     }
 
-    function resetAuthorCheck(){
-      $('#authorfilter input:checked').each(function() {
-            $(this).checked=false;
-        });
-      
+    function resetAuthorCheck() {
+      $('#authorfilter input:checked').each(function () {
+        $(this).checked = false;
+      });
+
     }
 
 
@@ -413,7 +422,8 @@ license information.}}
 
 
     function displayOrChangeTableauforLable(report) {
-      var hostMyUrl = "https://public.tableau.com/views/myvmlabels/" + report;
+      //var hostMyUrl = "https://public.tableau.com/views/myvmlabels/" + report;
+      var hostMyUrl = "https://public.tableau.com/views/top-prod-ts/productivity"
       var paramstring = "?:embed=y&amp;:showVizHome=no&amp;:host_url=https%3A%2F%2Fpublic.tableau.com%2F&amp;:embed_code_version=3&amp;:toolbar=yes&amp;:animate_transition=yes&amp;:display_static_image=no&amp;:display_spinner=no&amp;:display_overlay=yes&amp;:display_count=yes&amp;publish=ye&amp;:loadOrderID=0";
 
       // var alphaurl="https://public.tableau.com/views/alphasense-productivity/Dashboard1";  
@@ -422,6 +432,29 @@ license information.}}
       //    } 
       //$("#myiframeforreport").attr('src', hostMyUrl + paramstring);
       var containerDiv = document.getElementById("tableauViz");
+      //var defaultFilter="Author Name";
+      var defaultFilter = "Team";
+
+      if (report == "quality") {
+        hostMyUrl = "https://public.tableau.com/views/top-prod-ts/quality"
+      }
+
+      if (report == "productivity_imporvement") {
+        hostMyUrl = "https://public.tableau.com/views/top-prod-ts/productivity_imporvement"
+      }
+
+      if (report == "quality_imporovement") {
+        hostMyUrl = "https://public.tableau.com/views/top-prod-ts/quality_imporovement"
+      }
+
+      if (report == "topdevs") {
+        hostMyUrl = "https://public.tableau.com/views/major-testing/topdevlang"
+        defaultFilter = "Author";
+      }
+
+
+
+
       var options = {
 
         "Page": "1",
@@ -439,7 +472,7 @@ license information.}}
           workbook = viz.getWorkbook();
 
           activeSheet = workbook.getActiveSheet();
-          activeSheet.applyFilterAsync("Author Name", "",
+          activeSheet.applyFilterAsync(defaultFilter, "",
             tableau.FilterUpdateType.ALL);
 
         }

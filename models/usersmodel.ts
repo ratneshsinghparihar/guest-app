@@ -9,6 +9,9 @@ export class UsersModel {
 
     @column({ name: "UserEmail", type: Sequelize.STRING })
     UserEmail: string;   
+
+    @column({ name: "isAdmin", type: Sequelize.BOOLEAN })
+    isAdmin: boolean;   
 }
 
 export default UsersModel;
