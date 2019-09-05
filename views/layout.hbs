@@ -102,6 +102,8 @@ license information.}}
           <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
             aria-haspopup="true" aria-expanded="false">organization reports</a>
           <div class="dropdown-menu">
+            
+            <a class="dropdown-item" onclick="changerlablereport('team_imporovement');">Team imporovement</a>
             <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
             <a class="dropdown-item" onclick="changerlablereport('quality');">Quality</a>
             <a class="dropdown-item" onclick="changerlablereport('productivity_imporvement');">Productivity Improvment</a>
@@ -229,6 +231,8 @@ license information.}}
     var workbook;
     var viz;
     var authors;
+	var isDesignChecked = true
+    var isQualityChecked = true
     function changereportdesign(report) {
       curDesignReport = report;
       reportCategory = "design";
@@ -449,6 +453,10 @@ license information.}}
 
       if (report == "quality_imporovement") {
         hostMyUrl = "https://public.tableau.com/views/top-prod-ts/quality_imporovement"
+      }
+
+      if (report == "team_imporovement") {
+        hostMyUrl = "https://public.tableau.com/views/top-prod-ts/improvement_teamwise_nitin"
       }
 
       if (report == "topdevs") {
@@ -784,6 +792,8 @@ license information.}}
     }
     function toggleqality(element) {
       qualityscores = [];
+      isQualityChecked = element.checked;
+
       $("#lblminimumscore").text(0);
 
 
@@ -793,7 +803,8 @@ license information.}}
 
       $("#lblstrechscore").text(0);
 
-      if (!element.checked) {
+      if (!element.checked && isDesignChecked) {
+
         $('#quality').empty()
         if (authors && authors.length) {
           authors.forEach((author) => {
@@ -801,20 +812,7 @@ license information.}}
             $('#quality').append(checkboxstr);
           })
         }
-      } else {
-        $('#quality').empty()
-        if (authors && authors.length) {
-          authors.forEach((author) => {
-            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
-            $('#quality').append(checkboxstr);
-          })
-        }
-      }
-    }
-
-    function toggleDesign(element) {
-      qualityscores = [];
-      if (!element.checked) {
+      } else if (element.checked && !isDesignChecked) {
         $('#quality').empty()
         if (authors && authors.length) {
           authors.forEach((author) => {
@@ -822,11 +820,59 @@ license information.}}
             $('#quality').append(checkboxstr);
           })
         }
-      } else {
+      } else if (element.checked && isDesignChecked) {
         $('#quality').empty()
         if (authors && authors.length) {
           authors.forEach((author) => {
             let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + '0' + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + '0' + "," + "Quality All= " + '0' + ", Design All= " + '0' + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      }
+    }
+
+    function toggleDesign(element) {
+      isDesignChecked = element.checked;
+      qualityscores = [];
+      if (!element.checked && isQualityChecked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.quality_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.quality_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else if (element.checked && !isQualityChecked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.design_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.design_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+      } else if (element.checked && isQualityChecked) {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+            $('#quality').append(checkboxstr);
+          })
+        }
+
+      } else {
+        $('#quality').empty()
+        if (authors && authors.length) {
+          authors.forEach((author) => {
+            let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + '0' + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + '0' + "," + "Quality All= " + '0' + ", Design All= " + '0' + " )" + '<br />';
             $('#quality').append(checkboxstr);
           })
         }
