@@ -9,8 +9,8 @@ license information.}}
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>{{title}}</title>
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -43,8 +43,8 @@ license information.}}
   <!-- Nav bar -->
   <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <a class="navbar-brand" href="/index">Project Cicero</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
-      aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+      aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -59,8 +59,7 @@ license information.}}
             aria-haspopup="true" aria-expanded="false">projects</a>
           <div class="dropdown-menu">
             {{#each projectAccess}}
-            <a class="dropdown-item"
-              onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
+            <a class="dropdown-item" onclick="changeproject('{{this.projectname}}','{{this.projectuuid}}');">{{this.projectname}}</a>
             {{/each}}
           </div>
         </li>
@@ -102,7 +101,7 @@ license information.}}
           <a id="taletnicalables" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
             aria-haspopup="true" aria-expanded="false">organization reports</a>
           <div class="dropdown-menu">
-            
+
             <a class="dropdown-item" onclick="changerlablereport('team_imporovement');">Team imporovement</a>
             <a class="dropdown-item" onclick="changerlablereport('Productivity');">Productivity</a>
             <a class="dropdown-item" onclick="changerlablereport('quality');">Quality</a>
@@ -111,8 +110,8 @@ license information.}}
             <a class="dropdown-item" onclick="changerlablereport('topdevs');">top developers</a>
             <a class="dropdown-item" onclick="changerlablereport('clustering_productivity');">clustering_productivity</a>
             <a class="dropdown-item" onclick="changerlablereport('clustering_quality');">clustering_quality</a>
-            
-            
+
+
             <a class="dropdown-item" onclick="showGridData();">Label Data</a>
 
           </div>
@@ -176,8 +175,8 @@ license information.}}
         <label id="lblstrechscore" style="background-color: #3a7f47">0.0</label>
       </div>
       <div id='if-partproductivity' style='visibility: hidden;'>
-        <input id="targetPerP" type="text" value="30" name="Target %" onchange="calculatescore();">Target %</input>
-        <input id="strechPerP" type="text" value="40" name="Stretch %" onchange="calculatescore();">Stretch %</input>
+        <input id="targetPerP" type="text" value="30" name="Target %">Target %</input>
+        <input id="strechPerP" type="text" value="40" name="Stretch %">Stretch %</input>
         <label>Minimum</label>
         <label id="lblminimumscoreP" style="background-color: #71f28a">0.0</label>
         <label>Target</label>
@@ -188,6 +187,7 @@ license information.}}
       <div class="d-flex">
         <div id="productivity"> </div>
         <div id="datefilter"></div>
+        <div id="applyButton"></div>
       </div>
     </div>
 
@@ -213,11 +213,9 @@ license information.}}
   <!-- Bootstrap core JavaScript
     ================================================== -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
   <script>
     var curDesignReport = "";
@@ -231,7 +229,7 @@ license information.}}
     var workbook;
     var viz;
     var authors;
-	var isDesignChecked = true
+    var isDesignChecked = false
     var isQualityChecked = true
     function changereportdesign(report) {
       curDesignReport = report;
@@ -268,6 +266,7 @@ license information.}}
       $('#productivity').empty();
 
       addDateFilter();
+      addApplyButton();
       $.ajax({
         type: "POST",
         url: "https://172.19.101.120:3333/data/projects/action/doExecuteSPDashboard",
@@ -290,7 +289,8 @@ license information.}}
     }
 
     function toggleDateCheck(element, date) {
-      productivityscores = [];
+      //return;
+      //productivityscores = [];
       $("#lblminimumscoreP").text(0.0);
       $("#lbltargetscoreP").text(0.0);
       $("#lblstrechscoreP").text(0.0);
@@ -306,29 +306,19 @@ license information.}}
         }
         productivityDates.splice(ps, 1);
       }
-      var arrDates = [];
-      productivityDates.forEach((dateObj) => {
-        console.log(`guid:${dateObj}`)
-        arrDates.push(dateObj.date)
-      })
-
-      let finalDateStr = arrDates.join()
-      console.log(`guid:${finalDateStr}`)
-      if (finalDateStr == "") {
-        let str = "01-Feb-2019,01-Mar-2019,01-Apr-2019,01-May-2019,01-Jun-2019,01-Jul-2019"
-        refreshProductivityAccordingToDates(str)
-      } else {
-        refreshProductivityAccordingToDates(finalDateStr)
-      }
       //calculatescore();
 
+    }
+
+    function applyFinalScores() {
+      calculatescore();
     }
 
     function refreshProductivityAccordingToDates(dateStr) {
       var data0 = { spName: "getProductivityScore_abhi", param: curProject, param1: dateStr };
 
       var json = JSON.stringify(data0);
-      $('#productivity').empty();
+      //$('#productivity').empty();
 
       $.ajax({
         type: "POST",
@@ -341,25 +331,30 @@ license information.}}
           authors = msg;
           // addAuthorCheckBoc({ "name": "All" });
           if (authors && authors.length) {
+            $('#productivity').empty();
             authors.forEach((author) => {
               addDateWiseProductivityScore(author);
             })
           }
-
-
+          calculatescore();
         }
       });
     }
     function addDateFilter() {
       //'01-Feb-2019','01-Jan-2019','01-Mar-2019','01-Apr-2019','01-May-2019','01-Jun-2019'
       $('#datefilter').empty();
-      var arrDate = ["01-Oct-2018", "01-Nov-2018", "01-Dec-2018", "01-Jan-2019", "01-Feb-2019", "01-Mar-2019", "01-Apr-2019", "01-May-2019", "01-Jun-2019", "01-Jul-2019", "01-Aug-2019"];
+      var arrDate = ["01-Oct-2018", "01-Nov-2018", "01-Dec-2018", "01-Jan-2019", "01-Feb-2019", "01-Mar-2019", "01-Apr-2019", "01-May-2019", "01-Jun-2019", "01-Jul-2019", "01-Aug-2019", '01-Sep-2019', '01-Oct-2019', '01-Nov-2019', '01-Dec-2019',
+        '01-Jan-2020', '01-Feb-2020', '01-Mar-2020'];
       arrDate.forEach((date) => {
         let checkboxstr = '<input type="checkbox" onchange="toggleDateCheck(this,&#39;' + date + '&#39;);"    /> ' + date + '<br />';
         $('#datefilter').append(checkboxstr);
       });
-
     }
+
+    function addApplyButton() {
+      let applyButton = '<button type="button" onClick="applyFinalScores()"> ' + 'Apply' + '</button>';
+      $('#applyButton').append(applyButton);
+    };
 
     function redirectQuality() {
       // let href = "/productivityscore?spname=getQualityScore&projectname=" + curProject;
@@ -442,7 +437,7 @@ license information.}}
       var containerDiv = document.getElementById("tableauViz");
       //var defaultFilter="Author Name";
       var defaultFilter = "Team";
-      var defaultFilterValues="";
+      var defaultFilterValues = "";
       if (report == "quality") {
         hostMyUrl = "https://public.tableau.com/views/top-prod-ts/quality"
       }
@@ -468,9 +463,9 @@ license information.}}
       if (report == "clustering_productivity") {
         hostMyUrl = "https://public.tableau.com/views/clustering_productivity/clustering_productivity"
         defaultFilter = "Month";
-        defaultFilterValues=["2019-02-01","2019-03-01","2019-04-01","2019-05-01","2019-06-01","2019-07-01"]
+        defaultFilterValues = ["2019-02-01", "2019-03-01", "2019-04-01", "2019-05-01", "2019-06-01", "2019-07-01"]
       }
-       if (report == "clustering_quality") {
+      if (report == "clustering_quality") {
         hostMyUrl = "https://public.tableau.com/views/clustering_quality/QualityvsDesignjuly"
         defaultFilter = "Author Name";
       }
@@ -494,13 +489,13 @@ license information.}}
           workbook = viz.getWorkbook();
 
           activeSheet = workbook.getActiveSheet();
-          if(defaultFilterValues==""){
-          activeSheet.applyFilterAsync(defaultFilter, defaultFilterValues,
-            tableau.FilterUpdateType.ALL);
-          }
-          else{
+          if (defaultFilterValues == "") {
             activeSheet.applyFilterAsync(defaultFilter, defaultFilterValues,
-            tableau.FilterUpdateType.REPLACE);
+              tableau.FilterUpdateType.ALL);
+          }
+          else {
+            activeSheet.applyFilterAsync(defaultFilter, defaultFilterValues,
+              tableau.FilterUpdateType.REPLACE);
           }
 
         }
@@ -714,13 +709,24 @@ license information.}}
       return (values[half - 1] + values[half]) / 2.0;
     }
 
+    function average(values) {
+      if (values.length === 0) return 0;
+      values.sort(function (a, b) {
+        return a - b;
+      });
+
+      const averageValue = values.reduce((a, b) => a + b, 0) / values.length;
+      return averageValue;
+
+    }
+
     function calculatescore() {
       let curscores = [];
       for (let count = 0; count < productivityscores.length; count++) {
         let score = parseFloat(productivityscores[count].score);
         curscores.push(score);
       }
-      let medianScore = median(curscores);
+      let medianScore = average(curscores);
       $("#lblminimumscoreP").text((medianScore).toFixed(2));
 
       let targetper = Number($("#targetPerP").val());
@@ -741,7 +747,7 @@ license information.}}
         let score = parseFloat(qualityscores[count].score);
         curscores.push(score);
       }
-      let medianScore = median(curscores);
+      let medianScore = average(curscores);
       $("#lblminimumscore").text((medianScore).toFixed(2));
 
       let targetper = Number($("#targetPer").val());
@@ -759,6 +765,7 @@ license information.}}
 
 
     function toggleScore(element, author, score) {
+      //return;
       if (element.checked) {
         productivityscores.push({ score: score, author: author });
       }
@@ -771,7 +778,7 @@ license information.}}
         }
         productivityscores.splice(ps, 1);
       }
-      calculatescore();
+      //calculatescore();
     }
     function togglequalityScore(element, author, score) {
       if (element.checked) {
@@ -923,14 +930,14 @@ license information.}}
       if (index == 0) {
         $('#qualityanddesign').empty()
         let qualitycheckboxstr = '<input type="checkbox" onchange="toggleqality(this);" checked= "true" /> ' + "Quality";
-        let designcheckboxstr = '<input type="checkbox" onchange="toggleDesign(this);" checked= "true" /> ' + "Design" + '<br />';
+        let designcheckboxstr = '<input type="checkbox" onchange="toggleDesign(this);" /> ' + "Design" + '<br />';
         $('#qualityanddesign').append(qualitycheckboxstr);
         $('#qualityanddesign').append(designcheckboxstr);
 
       }
 
       // else {
-      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.qualityScore + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + author.qualityScore + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
+      let checkboxstr = '<input type="checkbox" onchange="togglequalityScore(this,&#39;' + author.authorName + '&#39; , &#39;' + author.quality_all + '&#39;);"    /> ' + author.authorName + " ( Quality Score= " + Math.floor(author.quality_all * 100) / 100 + "," + "Quality All= " + Math.floor(author.quality_all * 100) / 100 + ", Design All= " + Math.floor(author.design_all * 100) / 100 + " )" + '<br />';
       $('#quality').append(checkboxstr);
       //}
       $('#quality').show()

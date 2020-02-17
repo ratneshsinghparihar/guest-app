@@ -34,6 +34,9 @@ export class ProjectModel {
     @column({ name: "UpdateConfigStatus", type: Sequelize.INTEGER, allowNull: true })
     UpdateConfigStatus: number;
 
+    @column({ name: "IsActive", type: Sequelize.BOOLEAN, allowNull: true })
+    IsActive: boolean;
+
     @column({ name: "LastUpdateConfigDate", type: Sequelize.DATE, allowNull: true })
     LastUpdateConfigDate: Date;
     // constructor(){

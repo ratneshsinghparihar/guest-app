@@ -46,7 +46,7 @@ export class ConfigModel {
         config.ciceroServerHost = "172.19.101.120";
         config.cleanuprepos = "Drones-SW-DartService,Drones-SW-DartService";
         config.repospath = "repos";
-        config.sonarCommand = "\"../../sonar-scanner/bin/sonar-scanner.bat\" -Dsonar.host.url=http://172.19.101.120:9393 -Dsonar.login=2dcd3909dd3091d5b81cf5fbe1eede589bf8f221 -Dsonar.java.binaries=../../sonar-scanner/lib/ -Dsonar.projectName=$reponame -Dsonar.projectKey=$reponame -Dsonar.sources=./ -Dsonar.language=$repotype";
+        config.sonarCommand = "\"../../sonar-scanner/bin/sonar-scanner\" -Dsonar.host.url=http://172.19.101.120:9393 -Dsonar.login=2dcd3909dd3091d5b81cf5fbe1eede589bf8f221 -Dsonar.java.binaries=../../sonar-scanner/lib/ -Dsonar.projectName=$reponame -Dsonar.projectKey=$reponame -Dsonar.sources=./ -Dsonar.language=$repotype";
         config.sonarCommandWithoutType = "\"../../sonar-scanner/bin/sonar-scanner\" -Dsonar.host.url=http://172.19.101.120:9393 -Dsonar.login=2dcd3909dd3091d5b81cf5fbe1eede589bf8f221 -Dsonar.java.binaries=../../sonar-scanner/lib/ -Dsonar.projectName=$reponame -Dsonar.projectKey=$reponame -Dsonar.sources=./ ";
         config.exCludeFiles = "package-lock.json";
         return config;

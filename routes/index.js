@@ -51,12 +51,14 @@ router.get('/', async function (req, res, next) {
           //TO-D0 - uuid
           console.log("fetching project for project id " + projId);
           let projObj = await prjrepo.doGetProject(projId)
+          if(projObj){
           console.log("projects is ");
           console.log(JSON.stringify(projObj));
           ProjName = projObj.Name
           ProjUuid = projObj.Uniqueid;
           ProjObj = { "projectname": ProjName, "projectuuid": ProjUuid }
           projArray.push(ProjObj)
+          }
         }
         parms.projectAccess = projArray;
       }

@@ -92,11 +92,20 @@ export default class ProjectsRepository extends DynamicRepository {
     doGetProject(projid){
         return this.findOne(projid)
         .then(res=>{
+            if(res.IsActive==true){
             return res;
+            }
+            return undefined;
         })
         .catch(err=>{
             console.log(err);
             return err;
+        })
+    }
+
+    findAll(){
+        return super.findAll().then((res:ProjectModel[]) => {
+            return res.filter(x=>x.IsActive==true);
         })
     }
 
